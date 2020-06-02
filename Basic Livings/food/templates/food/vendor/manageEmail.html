@@ -1,0 +1,120 @@
+{% extends 'food/vendor/basic.html' %}
+
+{% block title %}Manage Email{% endblock %}
+
+{% block css %}
+.tbl{
+box-shadow: 3px 3px 10px #031d4a;
+border-radius: 4px;
+}
+
+.thead{
+background: #013d4a;
+color: white;
+}
+.emailhead{
+padding: 20px 0px 20px 10px;
+background: #013d4a;
+margin: 0px -15px;
+color: white;
+font-weight: 500;
+}
+
+#myForm input[type=text],#myForm [type=password],#myForm input[type=email], .textarea{
+border: 0;
+outline: 0;
+background: transparent;
+border-bottom: 1px solid #013d4a;
+border-radius: 0px;
+}
+
+#myForm input[type=text]:hover,#myForm [type=password]:hover,#myForm  .textarea:hover, #myForm  input[type=email]:hover,#myForm  input[type=text]:focus,#myForm input[type=password]:focus, #myForm  input[type=email]:focus,#myForm  .textarea:focus {
+border: 0;
+outline:0;
+border-bottom: 1px solid #013d4a;
+box-shadow: none;
+}
+.forminside{
+background: #fff;
+box-shadow: 0px 0px 10px #013d4a;
+}
+
+{% endblock %}
+
+{% block body %}
+{% load static %}
+<div class="container-fluid">
+    <form method="post" id="myForm" action="manageEmail/send-mail" class="form">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6 col-sm-12 col-xs-12">
+
+                <table class="table table-hover tbl bg-white">
+                    <thead class="thead">
+                    <tr>
+                        <th scope="col" title="Select All">
+                            <div class="custom-checkbox custom-control">
+                                <input type="checkbox" id="exampleCustomCheckbox0" class="custom-control-input">
+                                <label class="custom-control-label" for="exampleCustomCheckbox0"></label>
+                            </div>
+                        </th>
+                        <th scope="col">Email</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for myuser in myUsers %}
+                    <tr>
+                        <td>
+                            <div class="custom-checkbox custom-control">
+                                <input type="checkbox" name="check" value="{{ myuser.get_email }}" id="exampleCustomCheckbox{{ forloop.counter }}" class="custom-control-input boxes">
+                                <label class="custom-control-label" for="exampleCustomCheckbox{{ forloop.counter }}"></label>
+                            </div>
+                        </td>
+                        <td>{{ myuser.get_email }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12 d-flex justify-content-center">
+
+                <div class="row" style="font-size: 15px">
+                    <div class="col-md-12 forminside">
+                        <h5 class="emailhead">Send Message</h5>
+                        <br>
+                        <div class="form-group justify-content-center">
+                            <input type="password" name="password" placeholder="Your Email Password"  class="form-control" id="password"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="text"  name="subject" placeholder="Subject" class="form-control" id="sub"/>
+                        </div>
+                        <div class="form-group form-inline">
+                            <textarea name="message" class="form-control textarea" placeholder="Message" rows="5" style="width: 430px;"></textarea>
+                        </div>
+                        <div class="form-group d-flex justify-content-left">
+                            <button class="form-control btn blog-post_imgbtn font-weight-bold" id="send" style="height:40px; width:100px; color:#013d4a" type="">SEND</button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </form>
+</div>
+{% endblock %}
+{% block script %}
+
+<script>
+    $('#exampleCustomCheckbox0').click(function(){
+        $('.boxes').attr('checked', function(_, attr){ return !attr})
+    });
+</script>
+<script>
+        $('.table tbody').on('click', '.fa', function(){
+            $(this).closest('tr').remove();
+        });
+</script>
+
+{% endblock %}

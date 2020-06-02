@@ -1,0 +1,140 @@
+<!DOCTYPE html5>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{% load static %}
+	    <link rel="stylesheet" href='{% static "accounts/css/bootstrap.css" %}'>
+	    <link rel="stylesheet" href='{% static "accounts/css/custom.css" %}'>
+		<link rel="stylesheet" href='{% static "accounts/icons/css/all.css" %}'>
+	    <link rel="stylesheet" href='{% static "accounts/icons/css/material-icons.min.css" %}'>
+		<script src='{% static "accounts/js/jquery.js" %}'></script>
+	    <script src='{% static "accounts/js/bootstrap.js" %}'></script>
+
+	<style>
+
+	.errorlist {
+			padding: 0px;
+			text-align: left;
+			color: red;
+	}
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+    </style>
+</head>
+<body>
+<div class="container" id="container">
+
+	<div class="form-container p-4 sign-up-container" style="background-color: white;">
+		<form action="{% url 'register' %}" method="post">
+
+			{% for message in messages %}
+			{% if message.tags == 'success' %}
+			<p  class="{{ message.tags }}"style="color: green;">{{message}}</p>
+			{% endif %}
+			{% endfor %}
+		<h1>Create Account</h1>
+			{% csrf_token %}
+			{% for fields in add %}
+			<div class="form-group mb-0">
+			{% if fields.label == 'Student' %}
+
+			<label for="id_is_student" >Student</label>
+			{% elif fields.label == 'PG Vendor' %}
+			<label for="id_is_pgVendor">Paying Guest Vendor</label>
+			{% elif fields.label == 'Food Vendor' %}
+			<label for="id_is_foodVendor">Food Vendor</label>
+			{% endif %}
+			{{ fields }}
+			<p style="text-align: left;color: red;">{{ fields.errors }}</p>
+
+			</div>
+			{% endfor %}
+			<button type="submit">Sign Up</button>
+			</form>
+	</div>
+
+	<div class="form-container sign-in-container">
+		<form action="{% url 'login' %}" method="post"><br>
+			<i class="fa fa-user-circle fa-6x" style="color:green"></i>
+			<h1>Sign in</h1>
+			<br>
+			{% for error in messages %}
+			{% if error.tags == 'info' %}
+			<p  class="{{ error.tags }}" style="color: orange;">{{error}}</p>
+			{% endif %}
+			{% endfor %}
+			{% csrf_token %}
+			<input type="email" placeholder="Email" name="email" required oninvalid="this.setCustomValidity('Please Enter a valid Email')"/>
+			<input type="password" placeholder="Password" name="password" required  oninvalid="this.setCustomValidity('Please Enter the password')" />
+			<a href="{% url 'password_reset' %}">Forgot your password?</a>
+			<button type="submit">Sign In</button>
+			<a href="{% url 'main_home' %}">Back to Home</a>
+		</form>
+	</div>
+	<div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-left">
+				<h1>Welcome Back!</h1>
+				<p>To keep connected with us please login with your personal info</p>
+				<button class="ghost" id="signIn">Sign In</button>
+			</div>
+			<div class="overlay-panel overlay-right">
+				<h1>Welcome, to BasicLivings</h1>
+				<p>Enter your personal details and start journey with us</p>
+				<button class="ghost" id="signUp">Sign Up</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!--{{ creation }}-->
+
+<!--{{ change }}-->
+
+<script>
+
+    const signUpButton = document.getElementById('signUp');
+const signInButton = document.getElementById('signIn');
+const container = document.getElementById('container');
+
+signUpButton.addEventListener('click', () => {
+	container.classList.add("right-panel-active");
+});
+
+signInButton.addEventListener('click', () => {
+	container.classList.remove("right-panel-active");
+});
+
+$('#city').on('change', function(e){
+var id = $(this).val();
+e.preventDefault();
+$.ajax({
+    url: 'area',
+    type: 'POST',
+    data: {id: id,
+			csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
+		},
+
+    success: function (data) {
+		var areas = JSON.parse(data);
+        var text;
+        if(areas.length==0){
+            text += `<option value="" hidden>----Not Available----</option>`;
+        }else{
+        text='<option value="" hidden>----Areas----</option>';
+            for(i=0; i<areas.length; i++){
+        	    text += `<option value='${areas[i][0]}'>${areas[i][1]}</option>`;
+            }
+        }
+		$('#id_area_id').html(text);
+
+		}
+});
+});
+
+</script>
+</body>
+</html>

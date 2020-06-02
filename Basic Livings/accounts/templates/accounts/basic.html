@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{% load static %}
+	    <link rel="stylesheet" href='{% static "accounts/css/bootstrap.css" %}'>
+		<link rel="stylesheet" href='{% static "accounts/icons/css/all.css" %}'>
+	    <link rel="stylesheet" href='{% static "accounts/icons/css/material-icons.min.css" %}'>
+		<script src='{% static "accounts/js/jquery.js" %}'></script>
+	    <script src='{% static "accounts/js/bootstrap.js" %}'></script>
+
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <div class="container mt-3">
+
+    <div class="row d-flex justify-content-center align-items-center" style="background-color: #52c579;height: 6rem;border-radius: 3rem;">
+        <h1 class="text-light">Reset Password</h1>
+    </div>
+
+    </div>
+ {% block body %}
+    {% endblock %}
+</body>
+</html>

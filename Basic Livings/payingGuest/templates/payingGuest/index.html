@@ -1,0 +1,303 @@
+{% extends 'payingGuest/basic.html' %}
+{% block title %}Paying Guest Rooms{% endblock %}
+
+{% block link %}
+{% load static %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+{% endblock %}
+
+{% block css %}
+.rangeslider{
+position: relative;
+padding-bottom: 10px;
+background: #fff;
+}
+.rupeelabel,
+#rangeValue{
+position: relative;
+font-size: 20px;
+color: #333;
+}
+.range{
+width: 100%;
+height: 10px;
+-webkit-appearance: none;
+background: #CDD0D2;
+outline: none;
+border-radius: 15px;
+overflow: hidden;
+}
+.range::-webkit-slider-thumb{
+-webkit-appearance: none;
+width: 10px;
+height: 10px;
+border-radius: 50%;
+background: #fff;
+cursor: pointer;
+border: 2px solid #359FC1;
+box-shadow: -407px 0 0 400px #359FC1;
+}
+.filter{
+   background-color: rgba(26, 166, 236, 0.18);
+   padding-top: 15px;
+   margin-left: 5px;
+border-radius: 1rem;
+ justify-content: center;
+}
+.filterrow{
+    border-left: 4px solid #359FC1;
+    border-top: 2px solid #f2f2f2;
+    border-bottom: 2px solid #f2f2f2;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+    line-height: 40px !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow
+{
+    height: 40px !important;
+}
+.select2-container .select2-selection--single{
+    height: 40px !important;
+}
+.btngo{
+background-color:#009cea;
+color:#fff;
+border-radius: 40%;
+transition: 0.5s ease-in-out;
+opacity: 0.9;
+font-weight: 900;
+}
+.btngo:hover{
+    transform: scale(1.1, 1.1);
+    background: #fff;
+    color: #009cea;
+    box-shadow: 2px 2px 4px #000000;
+}
+
+{% endblock %}
+
+
+{% block hero %}
+We help you to easily find a place <br> to live on rent
+{% endblock %}
+
+{% block body %}
+{% load static %}
+<div class="container d-flex justify-content-center">
+    <form class="form" action="#" id="filterform" method="post">
+        {% csrf_token %}
+        <br>
+        <br>
+        <p style="margin-bottom:1px"><b>Filter</b></p>
+        <div class="row filterrow">
+            <div class="col-md-4 col-sm-6 col-xs-12 my-2 filter">
+                <div class="form-group">
+                    <select class="form-control"  id="city" name="city" style="width: 100%">
+                        <option></option>
+                         {% for city in cities %}
+                        <option value="{{ city.city_id }}">{{city.city_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12 my-2 filter">
+                <div class="form-group" >
+                    <select class="form-control " id="area" name="area" style="width: 100%">
+                        <option></option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 my-2 filter">
+                <div class="form-group">
+                    <select class="form-control" name="gender" id="gender" style="width: 100%">
+                        <option></option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Both">Both</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-xs-12 my-2 filter">
+                <div class="form-group">
+                    <select class="form-control"  id="amenities" name="amenities" style="width: 100%">
+                        <option></option>
+                         {% for amenity in amenities %}
+                        <option value="{{ amenity.amenities_name }}">{{amenity.amenities_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+             <div class="col-md-6 rangeslider">
+                <div class="row">
+                    <div class="col-md-6 pt-3">Price</div>
+                    <div style="display:inline;" class="col-md-6 d-flex justify-content-end pt-3">
+                        <label class="rupeelabel">&#x20B9; &nbsp;</label>
+                        <span id="rangeValue">100</span>&nbsp;
+                    </div>
+                </div>
+                <input type="range" name="price" class="range" value="100" min="100" max="5000" onChange="rangeSlide(this.value)"
+                       onmousemove="rangeSlide(this.value)">
+            </div>
+            <div class="col-md-1 mt-4">
+                <button type="reset" name="reset" class="btn btngo" onClick="window.location.reload()" >Clear</button>
+            </div>
+        </div>
+    </form>
+</div>
+<section id="portfolio" class="portfolio">
+    <div class="container">
+
+        <div class="section-title" data-aos="fade-up">
+            <h2 class="d-flex justify-content-left" >Our Collaborations</h2>
+            <hr class="mt-1 ml-1" width="300px" style="background: #627680; height: 3px;">
+        </div>
+        {% if count > 0 %}
+       <div class="row" data-aos="fade-up" id="roomContainer" data-aos-delay="200">
+            {% for room in rooms %}
+           <div class="col-lg-4 col-md-6 portfolio-item" data-aos="slide-up">
+                <div class="portfolio-wrap">
+                    <img src='/media/{{ room.image_path }}' style="height: 15rem;width: 100%;" onerror="this.src='/media/payingGuest/images/defaults/default.jpg'"  class="img-fluid" alt="mess1">
+                    <div class="portfolio-info">
+                        <p style="font-weight: bold;"> {{ room.address }} </p>
+                    </div>
+                    <div class="portfolio-links" style="bottom: calc(50% - 80px);">
+                        <a href="details/{{ room.room_id }}" title="More Details"><i class="bx bx-link"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+       </div>
+        {% else %}
+        <h2 class="d-flex justify-content-left" >No Collaborations Yet!!!</h2>
+        {% endif %}
+    </div>
+</section><!-- End Portfolio Section -->
+<br>
+{% endblock %}
+
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+<!--popover-->
+<script>
+  $(document).ready(function(){
+  $("button").popover({html:true})
+});
+</script>
+<script>
+  $(document).ready(function() {
+    $('#amenities').select2({
+        placeholder: "Select Amenity"
+    });
+});
+$(document).ready(function() {
+    $('#gender').select2({
+        placeholder: "Select Gender"
+    });
+});
+$(document).ready(function() {
+    $('#area').select2({
+        placeholder: "Select Area"
+    });
+});
+$(document).ready(function() {
+    $('#city').select2({
+        placeholder: "Select City"
+    });
+});
+
+</script>
+
+
+<!--range validator-->
+<script type="text/javascript">
+  function rangeSlide(value){
+    document.getElementById('rangeValue').innerHTML = value;
+  }
+
+
+
+$('#city').on('change', function(e){
+var id = $(this).val();
+e.preventDefault();
+$.ajax({
+    url: 'area',
+    type: 'POST',
+    data: {id: id,
+			csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
+		},
+
+    success: function (data) {
+		var areas = JSON.parse(data);
+        var text;
+        if(areas.length==0){
+            text += `<option value="" hidden>----Not Available----</option>`;
+        }else{
+        text='<option value="" hidden>----Areas----</option>';
+            for(i=0; i<areas.length; i++){
+        	    text += `<option value='${areas[i][0]}'>${areas[i][1]}</option>`;
+            }
+        }
+		$('#area').html(text);
+
+		}
+});
+});
+
+
+
+$("form").on('change',function(e) {
+e.preventDefault();
+<!-- Mess filter Ajax -->
+var fd = new FormData($('#filterform')[0]);
+fd.append('csrfmiddlewaretoken', $("input[name=csrfmiddlewaretoken]").val());
+console.log(fd);
+$.ajax({
+    url: 'filter',
+    type: 'POST',
+    data: fd,
+    processData: false,
+    contentType: false,
+
+     success: function(data){
+        var allMess = JSON.parse(data);
+        var text = '';
+
+        if(allMess.length > 0)
+        {
+                for(i=0; i<allMess.length; i++){
+                    text += `<div class="col-lg-4 col-md-6 portfolio-item" data-aos="slide-up">
+                        <div class="portfolio-wrap">
+                        <img src='/media/${allMess[i][3]}'  style="height: 15rem;width: 100%;" onerror="this.src='/media/payingGuest/images/defaults/default.jpg'" class="img-fluid" alt="mess1">
+                        <div class="portfolio-info">
+                            <h4>${allMess[i][1]}</h4>
+                            <p>${allMess[i][2]}</p>
+                        </div>
+                        <div class="portfolio-links" style="bottom: calc(50% - 80px);">
+                            <a href="details/${allMess[i][0]}" title="More Details"><i class="bx bx-link"></i></a>
+                        </div>
+                        </div>
+                    </div>`;
+                }
+        }
+        else
+        {
+                text += "<h2>No Such Rooms found!!</h2>"
+        }
+        $("#roomContainer").html(text);
+     }
+
+});
+
+});
+
+
+
+
+
+</script>
+{% endblock %}

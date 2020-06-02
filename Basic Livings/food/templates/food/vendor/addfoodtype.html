@@ -1,0 +1,160 @@
+{% extends 'food/vendor/basic.html' %}
+
+{% block title %}Add Food Types{% endblock %}
+
+{% block link %}
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+
+{% endblock %}
+
+{% block body %}
+{% load static %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12  headblock">
+            <h1 class="text-center" style="color:white">ADD FOOD TYPE</h1>
+            <hr class="bg-white" width="340px" style="height: 1px;margin-top:-6px">
+            <hr class="bg-white" width="340px" style="margin-top:-13px">
+        </div>
+    </div>
+    <form class="form md-form formstyle" name="foodForm" method="post" action="{% url 'submit_food_type' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+        <div class="row ">
+            <div class="col-md-5 offset-1 pt-3 addmessform">
+                <!-- Uploaded image area-->
+                <div class="container imgstyle image-area mt-4">
+                    <img id="imageResult" src='{% static "payingGuest/image/logo.png" %}' alt="" class="img-fluid rounded mx-auto d-block">
+                </div>
+                <br>
+                <!-- Upload image input-->
+                <div class="input-group mb-3 px-2 py-2 rounded-pill bg-black shadow-sm">
+                    {{ Form.image_path }}
+                    <label id="upload-label" for="upload" class="font-weight-bold text-muted">Choose file</label>
+                    <div class="input-group-append">
+                        <label for="upload" class="btn btn-light m-0 rounded-pill px-4 pt-2"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-5 ml-5 pt-4 addmessform">
+                <div class="form-group">
+                    <label for="title">{{ Form.title.label_tag }}</label>
+                    {{ Form.title }}
+                </div>
+
+                <div class="form-group">
+                    <label for="messid">Mess:</label>
+                    <select name="messid" class="form-control form-control-md" id="messid">
+                        {% if count > 0 %}
+                        {% for mess in myMess %}
+                        <option></option>
+                        <option value="{{ mess.get_mess_id }}">{{ mess }}</option>
+                        {% endfor %}
+                        {% else %}
+                        <option value="">None</option>
+                        {% endif %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="tiffinid">Tiffin Type:</label>
+                    <select name="tiffinid" class="form-control form-control-md" id="tiffinid">
+                        {% if count > 0 %}
+                        {% for tiffin in tiffins %}
+                        <option></option>
+                        <option value="{{ tiffin.get_tiffin_id }}">{{ tiffin }}</option>
+                        {% endfor %}
+                        {% else %}
+                        <option value="">None</option>
+                        {% endif %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">{{ Form.category.label_tag }}</label>
+                    {{ Form.category }}
+                </div>
+
+                <div class="form-group">
+                    <label for="description">{{ Form.description.label_tag }}</label>
+                    {{ Form.description }}
+                </div>
+
+                <div class="form-group">
+                    <label for="price">{{ Form.price.label_tag }}</label>
+                    <div class="input-group-prepend">
+                        <div class="input-group-text" style="background-color: transparent;border: 0px;"><i class="fa fa-inr" style=""></i></div>
+                        {{ Form.price }}
+                    </div>
+                </div>
+
+                <div class="form-group d-flex justify-content-center">
+                    <input type="submit" class="btnsubmit" name="submit" value="ADD">
+                    <input type="reset" class="btnreset ml-1" name="submit" value="RESET">
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+
+{% block script %}
+{% load static %}
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+
+<script>
+/*  ==========================================
+    SHOW UPLOADED IMAGE
+* ========================================== */
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#imageResult')
+                .attr('src', e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$(function () {
+    $('#upload').on('change', function () {
+        readURL(input);
+    });
+});
+
+/*  ==========================================
+    SHOW UPLOADED IMAGE NAME
+* ========================================== */
+var input = document.getElementById( 'upload' );
+var infoArea = document.getElementById( 'upload-label' );
+
+input.addEventListener( 'change', showFileName );
+function showFileName( event ) {
+  var input = event.srcElement;
+  var fileName = input.files[0].name;
+  infoArea.textContent = 'File name: ' + fileName;
+}
+
+</script>
+
+<script>
+    $(document).ready(function() {
+    $('#messid').select2({
+        placeholder: "Your Mess"
+    });
+    $('#tiffinid').select2({
+        placeholder: "Tiffin Type"
+    });
+    $('#category').select2({
+        placeholder: "Categories"
+    });
+
+});
+
+</script>
+{% endblock %}

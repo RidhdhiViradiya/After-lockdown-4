@@ -1,0 +1,373 @@
+{% extends 'food/basic.html' %}
+
+{% block title %}View Mess{% endblock %}
+{% block css %}
+#hero{
+display: none;
+}
+.vegimg img{
+height: 250px;
+width: 300px;
+}
+
+.box{
+position: relative;
+width: 300px;
+height: 370px;
+box-shadow: 0 0 10px 1px #333;
+}
+.box imgbx{
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+}
+
+.box .imgbx img{
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+<!--    object-fit: cover;-->
+transition: 0.5s;
+}
+.box:hover .imgbx img
+{
+background: rgba(0, 0, 0, 0.7);
+<!--    opacity: 0.9;-->
+}
+.box .cardcontent{
+position: absolute;
+bottom: 20px;
+left: 10%;
+width: 80%;
+height: 50px;
+background: #fff;
+transition: 0.5s;
+overflow: hidden;
+padding: 15px;
+box-sizing: border-box;
+}
+.box:hover .cardcontent
+{
+width: 100%;
+height: 100%;
+bottom: 0;
+left: 0;
+opacity: 0.9;
+}
+.foodnav .nav{
+background-color:#F2F3F4 ;
+border-bottom: 1px solid #5DADE2;
+}
+.foodnav a{
+color: #5DADE2;
+font-weight: bold;
+}
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+color: #5DADE2;
+background-color: #fff;
+border-color: #5DADE2 #5DADE2 #fff;
+}
+.nav-tabs .nav-link:hover{
+border-color: #5DADE2 #5DADE2 #5DADE2;
+}
+.nav-tabs .nav-link:focus{
+border-color: #5DADE2 #5DADE2 #fff;
+}
+
+.card .cardcontent .portfolio-links:hover{
+opacity: 1;
+}
+.card .cardcontent .portfolio-links a:hover{
+color: #fff;
+background: #009cea;
+}
+.card .cardcontent .portfolio-links{
+opacity: 1;
+left: 0;
+right: 0;
+bottom: -10%;
+text-align: center;
+z-index: 3;
+position: relative;
+}
+.card .cardcontent .portfolio-links a{
+color: #009cea;
+margin: 0 2px;
+font-size: 24px;
+display: inline-block;
+transition: 0.3s;
+background: #eaf8ff;
+border-radius: 50px;
+line-height: 0;
+padding: 6px;
+}
+.imghead{
+    opacity: 1;
+}
+.modal-header, .modal-footer{
+    background-color: #F2F3F4;
+}
+
+{% endblock %}
+
+{% block body %}
+{% load static %}
+<br>
+
+
+
+<section id="portfolio-details" class="portfolio-details">
+    <div class="container">
+        <div class="portfolio-details-container" data-aos="fade-up">
+            <div class="owl-carousel portfolio-details-carousel">
+                <img src='/media/{{ mess.image_path }}'  onerror="this.src='/media/mess/images/defaults/mess.png'" class="img-fluid imghead" style="height: 500px;" alt="mess">
+            </div>
+
+            <div class="portfolio-info">
+                <h3>{{mess.mess_name}} </h3>
+                <H6>{{ mess.address }}</H6>
+            </div>
+
+        </div>
+        <div class="portfolio-description">
+        </div>
+    </div>
+</section><!-- End Portfolio Details Section -->
+
+
+<section class="section">
+    <div class="container"  data-aos="fade-up">
+        <div class="row">
+            {% if catCount > 0 %}
+            <div class="col-md-12 p-2">
+                <p style="font-size:25px; color:#627680;"><b>Select Category</b></p>
+                <hr width="200px" style="background: #627680; margin-top:-10px; margin-left: -2px; height: 2px;">
+                            {% if success %}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong> Successfully Booked </strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            {% endif %}
+                <nav class="foodnav">
+
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+
+                        {% for cat in categories %}
+                            {% if cat.category == 'Veg' %}
+                            <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Vegetarian</a>
+                            {% elif cat.category == 'Non-Veg' %}
+                            <a class="nav-item nav-link " id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Non Vegetarian</a>
+                            {% elif cat.category == 'Semi Non-Veg' %}
+                            <a class="nav-item nav-link " id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Semi Vegetarian</a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+                </nav>
+                <br>
+                <div class="tab-content" id="nav-tabContent">
+                    {% for cat in categories %}
+                        {% if cat.category == 'Veg' %}
+                            <div class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                <div class="row">
+                                    {% for type in food_types %}
+                                    {% if type.category == 'Veg' %}
+                                    <div class="col-md-4 col-sm-6 col-xs-12 my-2 d-flex justify-content-center">
+                                        <div class="card box">
+                                            <div class="imgbx">
+                                                <img src='/media/{{ type.image_path }}'  onerror="this.src='/media/mess/images/defaults/food.jfif'" class="img-fluid" alt="card image">
+                                            </div>
+                                            <div class="cardcontent">
+                                                <h5 class="text-center">{{type.title}}</h5>
+                                                <table class="table">
+                                                    <tr>
+                                                        <td><b>Description</b></td>
+                                                        <td><strong>Items:</strong> {{type.description}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Price</b></td>
+                                                        <td>&#x20B9;{{type.price}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Tiffin Type</b></td>
+                                                        <td>{{type.tiffin_id.type_name}} </td>
+                                                    </tr>
+                                                </table>
+                                                <div class="portfolio-links">
+                                                    <input type="hidden" value="{{ type.food_id }}">
+                                                    {% if user.is_authenticated %}
+                                                    <a href="#apply" data-toggle="modal" class="btnn" title="Book Now"><i class="bx bx-plus"></i></a>
+                                                    {% else %}
+                                                    <a href="/accounts" class="btnn" title="Login to Book"><i class="fa fa-user"></i></a>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% elif cat.category == 'Non-Veg' %}
+                            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                <div class="row">
+                                     {% for type in food_types %}
+                                    {% if type.category == 'Non-Veg' %}
+                                   <div class="col-md-4 col-sm-6 col-xs-12 my-2 d-flex justify-content-center">
+                                        <div class="card box">
+                                            <div class="imgbx">
+                                                <img src='/media/{{ type.image_path }}' class="img-fluid" alt="card image">
+                                            </div>
+                                            <div class="cardcontent">
+                                                <h5 class="text-center">{{type.title}}</h5>
+                                                <table class="table">
+                                                    <tr>
+                                                        <td><b>Description</b></td>
+                                                        <td><strong>Items:</strong> {{type.description}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Price</b></td>
+                                                        <td>&#x20B9;{{type.price}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Tiffin Type</b></td>
+                                                        <td>{{type.tiffin_id.type_name}} </td>
+                                                    </tr>
+                                                </table>
+                                                <div class="portfolio-links">
+                                                    <input type="hidden" value="{{ type.food_id }}">
+                                                    {% if user.is_authenticated %}
+                                                    <a href="#apply" data-toggle="modal" class="btnn" title="Book Now"><i class="bx bx-plus"></i></a>
+                                                    {% else %}
+                                                    <a href="/accounts" class="btnn" title="Login to Book"><i class="fa fa-user"></i></a>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% elif cat.category == 'Semi Non-Veg' %}
+                            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                <div class="row">
+                                    {% for type in food_types %}
+                                    {% if type.category == 'Semi Non-Veg' %}
+                                    <div class="col-md-4 col-sm-6 col-xs-12 my-2 d-flex justify-content-center">
+                                        <div class="card box">
+                                            <div class="imgbx">
+                                                <img src='/media/{{ type.image_path }}' class="img-fluid" alt="card image">
+                                            </div>
+                                            <div class="cardcontent">
+                                                <h5 class="text-center">{{type.title}}</h5>
+                                                <table class="table">
+                                                    <tr>
+                                                        <td><b>Description</b></td>
+                                                        <td><strong>Items:</strong> {{type.description}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Price</b></td>
+                                                        <td>&#x20B9;{{type.price}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Tiffin Type</b></td>
+                                                        <td>{{type.tiffin_id.type_name}} </td>
+                                                    </tr>
+                                                </table>
+                                                <div class="portfolio-links">
+                                                    <input type="hidden" value="{{ type.food_id }}">
+                                                    <a href="#apply" title="Book Now" class="btnn" data-toggle="modal"><i class="bx bx-plus"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% else %}
+            <div class="col-md-12 p-2 d-flex justify-content-center">
+                <h2>Vendor Added <strong>NO</strong> Food Type till now !!!</h2>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!--Modal Form-->
+<div class="modal fade" id="apply" tabindex="-1" role="dialog" aria-labelledby="applymodal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" >
+                <h5 class="modal-title" id="applymodalTitle">Book Mess</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" action="" name="bookmess" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" id="food_id" name="food_id">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <input type="text" name="fnm" disabled class="form-control form-control-sm" value="{{ user.short_name }}" required placeholder="Enter First Name"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <input type="text" name="lnm" disabled class="form-control form-control-sm" value="{{ user.get_last_name }}" required placeholder="Enter Last Name"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <input type="tel" name="cno" disabled class="form-control form-control-sm" value="{{ user.get_phone }}" required placeholder="Enter Contact Number"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <input type="email" name="email" disabled class="form-control form-control-sm" value="{{ user.get_email }}" required placeholder="Enter Email"/>
+                            </div>
+                        </div>
+                        <div class="col-md-8 offset-2 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <textarea class="form-control form-control-sm" rows="4" disabled placeholder="Address" required>{{user.get_address}}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-block btn-primary">Book</button>
+                    <button type="button" class="btn btn-block btn-danger" data-dismiss="modal">Close</button>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+  <script src='{% static "food/js/jquery.js" %}'></script>
+<script>
+$(document).ready(function(){
+    $("#nav-tab a:first").addClass("active");
+    $("#nav-tabContent div:first").addClass("show active");
+});
+$(".btnn").click(function(){
+    var num= $(this).siblings("input").val();
+    $("#food_id").val(num);
+});
+</script>
+
+{% endblock %}

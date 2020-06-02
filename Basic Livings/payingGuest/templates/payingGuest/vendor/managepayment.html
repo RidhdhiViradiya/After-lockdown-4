@@ -1,0 +1,249 @@
+{% extends 'payingGuest/vendor/basic.html' %}
+
+{% block title %}Manage Payment{% endblock %}
+
+{% block css %}
+.nav-item .nav-link:focus{ color: #1b7f9e !important;   }
+.nav-item .active .activelnk{ color: #1b7f9e !important;  }
+.nav-item .nav-link{color: #1b7f9e !important; }
+
+.custombtn{
+background-image: linear-gradient(to left, #10728c 0%,#88f3ed 100%);
+width: 150px;
+height: 50px;
+color:#013d4a;
+font-weight: 900;
+font-size: 21px;
+}
+.custombtn:hover{
+background-image: linear-gradient(to left, #5fe3dc 0%,#054252 100%);
+color:#013d4a;
+}
+.cardhead{
+padding: 10px 0px 10px 0px;
+background: #013d4a;
+color: white;
+font-weight: 500;
+}
+
+.faicon{
+margin-top:-28px;
+color: #013d4a;
+font-size: 20px;
+padding-left: 10px;
+}
+
+.btnpay{
+width: 100px;
+height: auto;
+background: transperant;
+border: 2px solid #013d4a;
+color: #013d4a;
+font-weight: bold;
+font-size: 20px;
+}
+.btnpay:hover, btnpay:focus{
+background-image: linear-gradient(to left, #10728c 0%,#88f3ed 100%);
+color:#013d4a;
+}
+input[type="radio"]{
+-webkit-appearance: none;
+display: none;
+}
+.radiolbl{
+height: 180px;
+width: 250px;
+border: 6px solid #013d4a;
+position: relative;
+margin: auto;
+border-radius: 10px;
+}
+.radiofa{
+font-size: 80px;
+color: #013d4a;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-80%);
+}
+.radiolbl span{
+color: #013d4a;
+position: absolute;
+top: 80%;
+left: 50%;
+transform: translate(-50%,-80%);
+font-weight: bold;
+}
+input[type="radio"]:checked + label {
+background-color: #8dccc8;
+}
+
+{% endblock %}
+
+{% block body %}
+{% load static %}
+<div class="container">
+    <div class="row">
+        <!--  To get the id of the room      -->
+        <!--        {{ request.GET.rid }}-->
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="main-card mb-3 card paymentcard">
+                <div class="card-body">
+                    <ul class="nav nav-tabs m-3 nav-justified navtabs">
+                        <li class="nav-item itemhover1"><a data-toggle="tab" href="#tab-eg11-2" id="tb1" class=" nav-link active"><b class="activelnk">Select Plan</b></a></li>
+                        <!--                        <li class="nav-item itemhover1"><a data-toggle="tab" href="#tab-eg11-0" class=" nav-link "><b >Choose Method</b></a></li>-->
+                        <li class="nav-item itemhover2"><a data-toggle="tab"  id="tb2" class="nav-link"><b class="activelnk">Enter Details</b></a></li>
+                    </ul>
+                    <div class="tab-content maincontent">
+                        <div class="tab-pane active" id="tab-eg11-2" role="tabpanel">
+                            <div class="container">
+                                <div class="row">
+                                    {% for package in packages %}
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                        <div class="team-single">
+                                            <div class="content-area" >
+                                                <div class="side-one">
+                                                    <div class="card cardplan">
+                                                        <div class="cardhead text-center">
+                                                            <h4></h4>
+                                                        </div>
+                                                        <div class="card-body text-center">
+                                                            <!--                                                            <div class="img-area ">-->
+                                                            <!--                                                                <img  class="img-fluid" src='{% static "payingGuest/images/bg2.jpg" %}' alt="bg2.jpg">-->
+                                                            <!--                                                            </div>-->
+                                                            <h3 style="text-align: centre;font-family: Roboto;">{{package.title}}</h3>
+                                                            <div class="text-center"><h2><b>Rs {{package.price}}</b></h2></div>
+                                                        </div>
+                                                        <!--                                                        <div class="text-center"><p><b>Rs {{package.price}}</b></p></div>-->
+                                                    </div>
+                                                </div>
+                                                <div class="side-two">
+                                                    <div class="card cardplan">
+                                                        <div class="card-body text-center mt-4">
+                                                            <h5 style="text-align: centre;font-family: Roboto;">{{ package.description }}</h5>
+                                                            <input type="hidden" id="price" value="{{ package.price }}">
+                                                            <input type="hidden" id="duration" value="{{ package.duration }}">
+                                                            <button  data-toggle="tab" href="#tab-eg11-1"  class="mybtn2 btn blog-post_imgbtn font-weight-bold">Apply</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="tab-eg11-1" role="tabpanel">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-6 col-sm-12 col-xs-12 d-flex justify-content-center">
+                                        <form method="post" action="{% url 'payment' %}" class="form md-form">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="rid" value="{{ rid }}">
+                                            <div class="row">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label></label>
+                                                        <input type="hidden" id="amount" class="form-control"  style="padding-left:40px;" name="amount" >
+                                                        <input type="hidden" id="durations" class="form-control"  style="padding-left:40px;" name="durations" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group d-flex justify-content-center">
+                                                <input class="form-control btn btn-block btn-primary" id="btn" type="submit" name="submit" value="Proeed To Pay">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% block script %}
+<script>
+    $('.myBtn2').click(function(){
+        $('#tb1').removeClass('active');
+        $('#tb2').addClass('active');
+        var price = $(this).siblings('#price').val();
+        $('#amount').val(price);
+        var duration = $(this).siblings('#duration').val();
+        $('#durations').val(duration);
+    });
+</script>
+
+
+<script>
+
+   function validatecardnumber(cardnumber) {
+  console.log("Hi Harsh");
+    cardnumber = cardnumber.replace(/[ -]/g, '');
+
+    var match = /^(?:(4[0-9]{12}(?:[0-9]{3})?)|(5[1-5][0-9]{14})|↵
+(6(?:011|5[0-9]{2})[0-9]{12})|(3[47][0-9]{13})|(3(?:0[0-5]|[68][0-9])↵
+[0-9]{11})|((?:2131|1800|35[0-9]{3})[0-9]{11}))$/.exec(cardnumber);
+  if (match) {
+    // List of card types, in the same order as the regex capturing groups
+    var types = ['Visa', 'MasterCard', 'Discover', 'American Express',
+                 'Diners Club', 'JCB'];
+    // Find the capturing group that matched
+    // Skip the zeroth element of the match array (the overall match)
+    for (var i = 1; i < match.length; i++) {
+      if (match[i]) {
+        // Display the card type for that group
+        document.getElementById('notice').innerHTML = types[i - 1];
+        break;
+      }
+    }
+  } else {
+    document.getElementById('notice').innerHTML = '(invalid card number)';
+  }
+}
+
+
+
+
+</script>
+
+
+<script>
+
+
+    function fun(cardnumber){
+         console.log("Hi Harsh");
+    cardnumber = cardnumber.replace(/[ -]/g, '');
+
+    var match = /^(?:(4[0-9]{12}(?:[0-9]{3})?)|(5[1-5][0-9]{14})|↵
+(6(?:011|5[0-9]{2})[0-9]{12})|(3[47][0-9]{13})|(3(?:0[0-5]|[68][0-9])↵
+[0-9]{11})|((?:2131|1800|35[0-9]{3})[0-9]{11}))$/.exec(cardnumber);
+  if (match) {
+    // List of card types, in the same order as the regex capturing groups
+    var types = ['Visa', 'MasterCard', 'Discover', 'American Express',
+                 'Diners Club', 'JCB'];
+    // Find the capturing group that matched
+    // Skip the zeroth element of the match array (the overall match)
+    for (var i = 1; i < match.length; i++) {
+      if (match[i]) {
+        // Display the card type for that group
+        document.getElementById('notice').innerHTML = types[i - 1];
+        break;
+      }
+    }
+  } else {
+    document.getElementById('notice').innerHTML = '(invalid card number)';
+  }
+    }
+</script>
+
+{% endblock %}
+{% endblock %}

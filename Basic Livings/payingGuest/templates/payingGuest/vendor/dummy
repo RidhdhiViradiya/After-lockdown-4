@@ -1,0 +1,99 @@
+<script>
+/*  ==========================================
+    SHOW UPLOADED IMAGE
+* ========================================== */
+function trial(input) {
+
+    for(i=0; i<input.files.length; i++){
+
+        var div = document.createElement('div');
+        div.setAttribute('class', 'col-md-4 my-2');
+        var img = document.createElement('img');
+        img.setAttribute('class', 'img-fluid upload_img');
+        var idd = "imageResult" + i;
+        img.setAttribute('id', idd);
+        if (input.files && input.files[i]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                img.setAttribute('src', e.target.result);
+                console.log(img)
+            };
+            reader.readAsDataURL(input.files[i]);
+        }
+        div.append(img);
+
+
+        var container = document.getElementById('imgContainer');
+        container.append(div);
+
+    }
+    for(j=0; j<input.files.length; j++){
+
+
+    }
+
+}
+
+$(function () {
+    $('#upload1').on('change', function () {
+        trial(input);
+    });
+});
+
+</script>
+
+
+@login_required(login_url="/accounts/")
+def upload(request):
+    if request.method == 'POST':
+        form = ImageUploadForm(request.POST or None, request.FILES or None)
+        if form.is_valid():
+            for file in request.FILES.getlist('image'):
+                f = RoomImage()
+                room = Room.objects.get(room_id=1)
+                f.room_id = room
+                f.image_path = file
+                f.save()
+                print("Hii")
+        else:
+            messages.info(request, 'Please Select Valid Images!!')
+    return render(request, 'payingGuest/vendor/addrooms.html')
+
+
+    # myList=[]
+# cit = City.objects.get(city_id=city)
+        # mess = Mess.objects.filter(city=cit)
+        # myList = []
+        # for me in mess:
+        #     tup = (me.mess_id, me.mess_name, me.address, str(me.user_id), str(me.image_path), me.is_active, str(me.exp_date), str(me.area), str(me.city))
+        #     myList.append(tup)
+
+
+    # mydb = mysql.connector.connect(
+    #     host="localhost",
+    #     user="root",
+    #     passwd="",
+    #     database="BasicLivings"
+    # )
+    #
+    # mycursor = mydb.cursor()
+    # num = 5
+    # sql = "SELECT * FROM room_images where room_id in (select room_id from rooms where user_id = %s)"
+    # atr = (num, )
+    # mycursor.execute(sql, atr)
+    # myresult = mycursor.fetchall()
+
+
+
+        # redirect(request.path_info)  # No query parameters
+        #
+        # redirect(request.build_absolute_uri())  # Keeps query parameters
+        #
+        # redirect(request.get_full_path())  # Keeps query parameters
+
+
+        <script>
+  $(document).ready(function(){
+  $("button").popover({html:true})
+});
+</script>

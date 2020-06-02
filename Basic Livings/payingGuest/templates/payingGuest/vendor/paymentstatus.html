@@ -1,0 +1,22 @@
+{% extends 'payingGuest/vendor/basic.html' %}
+
+{% block title %}Payment Status{% endblock %}
+
+{% block body %}
+
+<div class="container">
+<!--    {{ response }}-->
+    <div class="col-md-12">
+        <h2>Payment Status regarding your room id {{ response.ORDERID }}</h2>
+        {% if response.RESPCODE == '01' %}
+            Payment Made Successful !!
+        {{ response.CUST_ID }}
+        {% else %}
+            Payment Failed !!
+         <br>
+            Failure Reason: {{ response.RESPMSG }}
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block extrastyle %}
+<style>
+<!--    #header{-->
+<!--        color: white;-->
+<!--        background-color: #0080C0;-->
+<!--    }-->
+<!--    .login input[type="submit"] {-->
+<!--        background-color: #0080C0;-->
+<!--        border-radius: 20px;-->
+<!--    }-->
+<!--    .login input[type="submit"]:hover {-->
+<!--        background-color: white;-->
+<!--        border: 1px solid #0080C0;-->
+<!--        font-weight: bold;-->
+<!--        color: #0080C0;-->
+<!--        transition: transform 0.4s ease-in-out;-->
+<!--        transform: scale(0.9,0.9);-->
+<!--    }-->
+<!--    .module caption,.module h2, .object-tools a:link, .object-tools a:visited, div .breadcrumbs,#changelist-filter input[type="submit"],#changelist-filter input[type="reset"] {-->
+<!--        background-color: #0080C0;-->
+<!--    }-->
+    #changelist-filter {
+        max-height: -webkit-fill-available;
+        overflow-y: scroll;
+    }
+
+    .login #content {
+        padding-bottom: 1rem !important;
+    }
+
+
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #0080C0;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #0080C0;
+}
+
+#footer {
+    display: none;
+}
+
+#content {
+    padding-bottom: 0px;
+    padding-top: 10px;
+}
+
+#changelist #toolbar {
+    border-radius: 30vh;
+    background: #0080c042 !important;
+    color: black;
+}
+
+
+</style>
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></h1>
+
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

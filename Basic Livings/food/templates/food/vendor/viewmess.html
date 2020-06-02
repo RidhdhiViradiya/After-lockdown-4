@@ -1,0 +1,159 @@
+{% extends 'food/vendor/basic.html' %}
+
+{% block title %}View Mess{% endblock %}
+
+{% block css %}
+#addBtn {
+background-color: #3F6AD8;
+color: white;
+letter-spacing: 3px;
+border-radius: 25px;
+width: fit-content;
+margin: auto;
+transition: 0.8s ease;
+padding: 15px 30px;
+margin-top:15px;
+box-shadow: 2px 2px 4px #000000;
+}
+
+#addBtn:hover  {
+transform: scale(0.9,0.9);
+background-color: white;
+color: #3F6AD8;
+border: 1px solid #3F6AD8;
+}
+
+.fields {
+
+max-width: max-content;
+border: 0px;
+background-color: transparent;
+margin-bottom: 10px;
+}
+
+.spclfields {
+
+max-width: 7rem;
+border: 0px;
+background-color: transparent;
+
+}
+
+
+.fieldsBack {
+    background-color: white !important;
+    border: 1px solid darkgrey !important;
+    color: black  !important;
+    border-radius: 6px;
+    padding-left: 5px;
+}
+
+.customBtn {
+letter-spacing: 0.2rem;
+border-radius: 20px;
+background-color: #3f6ad8;
+min-width: fit-content;
+text-decoration: none;
+transition: 0.7s ease;
+color: white;
+margin-right: 10px;
+margin-top: 10px;
+}
+
+.customBtn:hover {
+    text-decoration: none;
+    transform: scale(1.2);
+    border: 1px solid #3f6ad8;
+    color: #3f6ad8;
+    background-color: white;
+}
+
+
+{% endblock %}
+
+{% block script %}
+
+<script>
+    $(".mybtn").click(function(){
+        var id = $(this).parent().parent().parent().attr("id");
+        var makeId = "#"+id;
+        var idd = makeId.charAt(makeId.length - 1)
+        var ab = "#addBttn"+idd;
+        $(makeId).find(".fields").attr('disabled', function(_, attr){ return !attr});
+        $(makeId).find(ab).attr('disabled', function(_, attr){ return !attr});
+        $(makeId).find(".fields").toggleClass('fieldsBack');
+    });
+</script>
+
+<script>
+    $('.addBttn').click(function(e){
+    var id = $(this).parent().parent().parent().attr("id");
+    var makeId = "#"+id;
+    var idd = makeId.charAt( makeId.length - 1 );
+    var nm = "#name"+idd;
+    alert(nm);
+    var namee = $(nm).val();
+
+        if (namee == ""){
+            e.preventDefault();
+            alert('Name cannot be left Blank!!');
+        }
+
+    });
+</script>
+
+{% endblock %}
+
+{% block body %}
+{% load static %}
+
+{% if count > 0 %}
+
+<div>
+
+    <div class="row">
+        {% for mess in allmess %}
+        <div class="col-md-4  col-sm-6 col-xs-12 mb-3 d-flex justify-content-center ">
+
+            <form class="form" id="form{{ forloop.counter }}" action="?eid={{ mess.mess_id }}" method="post">
+                {% csrf_token %}
+
+                <div class="card cd" style="width: 20rem;font-size: 15px;">
+                <a class="fas fa-trash"  href="?did={{ mess.mess_id }}" style="color: white; background-color: red;padding: 5px;position: absolute;z-index: 5;"></a>
+
+                    <img class="card-img-top"  onerror="this.src='/media/mess/images/defaults/mess.png'" src='/media/{{ mess.image_path }}' height="180px">
+                    <div class="card-body">
+                        {% if not mess.is_active %}
+                            <a href="{% url 'managepayment_food' rid=mess.mess_id %}"><i class="fa fa fa-info-circle float-right red-tooltip" style="color: red;"  data-toggle="tooltip" data-placement="bottom" title="Click to complete Payment"></i> </a>
+                            {% endif %}
+                        <h2 class="card-title d-inline" style="color: red;font-size: 20px;">
+
+                        <input type="text" id="name{{ forloop.counter }}" name="mname" class="fields" style="color: #203263;" value="{{ mess.mess_name }}" disabled>  </h2>
+                        <p class="mybtn " style="float: right;"><span data-toggle="tooltip" data-placement="bottom" title="Edit Mess Name" class="fa fa fa-pencil-square-o" style="font-size: 15px;cursor: pointer;"></span></p>
+                        <p class="card-text">Mess ID: {{ mess.mess_id }}  </p>
+                        <p class="card-text">Address: {{ mess.address }}  </p>
+                        <p class="card-text">City: {{ mess.city }}</p>
+                        <p class="card-text">Area: {{ mess.area }}</p>
+                        <p class="card-text">Valid Till: {{ mess.exp_date }}</p>
+                        <input type="submit" id="addBttn{{ forloop.counter }}" disabled name="submit" value="UPDATE" class="addBttn btn customBtn"/>
+                        <a href="{% url 'managepayment_food' rid=mess.mess_id %}" class="customBtn btn btn-inline-block btn-lg font-weight-bold">UPGRADE</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% else %}
+<div class="row h-75 mx-auto d-flex align-items-center">
+    <div class="col-sm-12">
+        <h1 class="text-center">You have no Mess Added Yet!!</h1>
+        <a id="addBtn" class="text-decoration-none btn btn-block font-weight-bold" href="{% url 'add_food_type'  %}">ADD MESS</a>
+    </div>
+
+</div>
+
+{% endif %}
+{% endblock %}

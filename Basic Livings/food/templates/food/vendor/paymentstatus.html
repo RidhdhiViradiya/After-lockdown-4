@@ -1,0 +1,26 @@
+{% extends 'food/vendor/basic.html' %}
+
+{% block title %}Payment Status{% endblock %}
+
+{% block body %}
+
+<div class="container" style="width: 100%;">
+    <div class="row">
+<!--    {{ response }}-->
+    <div class="col-md-12">
+        <h2>Payment Status regarding your mess id {{ response.ORDERID }}</h2>
+        {% if response.RESPCODE == '01' %}
+            Payment Made Successful !!
+        {{ response.CUST_ID }}
+        {% else %}
+            Payment Failed !!
+        <br>
+        Try again One hour later!!
+        <br>
+            Failure Reason: {{ response.RESPMSG }}
+        {% endif %}
+    </div>
+</div>
+    </div>
+
+{% endblock %}

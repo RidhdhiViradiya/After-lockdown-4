@@ -1,0 +1,435 @@
+/* cards*/
+/*My css(ridhdhi) food side*/
+/* dashboared(Mess Vendor)*/
+.cards{
+border-radius: 5px;
+ background: #fff;
+ transition: 0.5s ease-in-out;
+ cursor: pointer;
+ height: 310px;
+ width: 300px;
+}
+.card:hover{
+    box-shadow: 5px 5px 15px #013d4a;
+}
+.cards .face{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cards .face .content {
+    margin-top: 15%;
+}
+.cards .face .content p, .card .face .content h2{
+    text-align: center;
+    background: #fff;
+    color: #09596b;
+    padding-top: 30px;
+}
+.cards .face .content a{
+    width: 80%;
+    background-image: linear-gradient(to left, #6a98b3 0%,#3bbeff 100%);
+    border-radius: 50px;
+}
+
+.cards .face .content a:hover, .card .face .content a:focus{
+     background-image: linear-gradient(to left, #5fe3dc 0%,#054252 100%);
+     color: #bbe3ed;
+}
+
+.cards .face .face1 .content h2{
+    margin-top: 60px;
+}
+.cards .face2{
+     border-radius: 5px;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    transition: 0.5s;
+    color: #fff;
+}
+.cards:hover .face2{
+    height: 70px;
+    width: 160px;
+    border-radius: 5%;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent;
+    border: 2px solid  #013d4a;
+}
+.cards:hover .face2 .hidefa{
+    display: none;
+}
+.cards .face2 h5{
+    margin: 0;
+    padding: 0;
+    font-size: 3em;
+    color: #fff;
+    transition: 0.5s ease-in-out;
+}
+.cards:hover .face2 h5{
+    margin-top: -20%;
+    color: #013d4a;
+    font-size: 2em;
+    font-weight: 600;
+}
+/* End of dashboared*/
+.head{
+    font-family: 'leto', sans-serif;
+    border: 1px solid green;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-left: none;
+    border-right: none;
+    color: #062c8f;
+    font-weight: 700;
+    background-image: linear-gradient(to top, #103cad 0%,#5fe3dc 100%);
+}
+/* Add Rooms*/
+.form label{
+    font-size : 14px;
+     color: #062c8f;
+    font-weight: 600;
+}
+.formstyle input,.formstyle select,.formstyle textarea, .formstyle select option{
+    border-color:#013d4a;
+    color: #013d4a;
+}
+.formstyle input:focus,.formstyle select:focus,.formstyle textarea:focus{
+    border : 1px solid #329db8;
+}
+/*image Uploader*/
+
+#upload {
+    opacity: 0;
+}
+#upload-label {
+    position: absolute;
+    top: 50%;
+    left: 1rem;
+    transform: translateY(-50%);
+}
+.image-area {
+    border: 2px solid #103cad;
+    padding: 1rem;
+    position: relative;
+
+}
+.container{
+    height:250px;
+    width: 250px;
+}
+.image-area::before {
+    content: 'Uploaded image result';
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.8rem;
+    z-index: 1;
+}
+
+.image-area img {
+    z-index: 2;
+    position: relative;
+    height: 220px;
+}
+/*
+*
+* ==========================================
+* FOR DEMO PURPOSES
+* ==========================================
+*
+*/
+/* css for view rooms*/
+/*
+#view{
+    font-family : 'Robono', sans-serif;
+    font-size: 10px;
+}
+#viewimg{
+    width: 100%;
+}
+.blog-post{
+    width: 97%;
+    max-width: 98rem;
+    padding: 2rem;
+    margin: 1rem;
+    background-color: #fff;
+    box-shadow: 0 1.4rem 8rem rgba(0,0,0,.2);
+    display:flex;
+    align-items: center;
+    border-radius: .4rem;
+}
+.blog-post_img{
+    min-width: 25rem;
+    max-width: 25rem;
+    height: 18rem;
+    transform: translateX(-4rem);
+    position: relative;
+}
+.blog-post_img .viewimg{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: .8rem;
+}
+.blog-post_img::before{
+    content: '';
+    width:100%;
+    height: 100%;
+    position:absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to right, rgba(79, 172, 254, .8),
+                                          rgba(0, 242, 254, .8));
+    box-shadow: .5rem .5rem 3rem 1px rgba(0, 0, 0, .05);
+    border-radius: .6rem;
+}
+.blog-post_date span{
+    display: block;
+    color: rgba(0,0,0,.5);
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin: .5rem 0;
+}
+.blog-post_title{
+    font-size: 2.5rem;
+    margin: 1.5rem 0 2rem;
+    text-decoration: uppercase;
+    color: #4facfe;
+}
+.blog-post_text{
+    margin-bottom: 3rem;
+    font-size: 1.4rem;
+    color: rgba(0,0,0,.7);
+}
+.blog-post_cta{
+    display: inline-block;
+    padding: 0.6rem 2.1rem;
+    letter-spacing: 1px;
+    text-transform: Uppercase;
+    font-size: 1.2rem;
+    color: #fff;
+     background-image: linear-gradient(to right, #5fe3dc 0%,#103cad 100%);
+    border-radius: .4rem;
+    text-decoration: none;
+}
+.blog-post_cta:hover{
+     background-image: linear-gradient(to right, #103cad 0%, #5fe3dc 100%);
+    color: #fff;
+}
+.blog-post_imgbtn{
+    display: inline-block;
+    padding: 0.6rem 2.1rem;
+    letter-spacing: 1px;
+    text-transform: Uppercase;
+    font-size: 1.2rem;
+    color: #fff;
+    background-image: white ;
+    background-image: linear-gradient(to right, #5fe3dc 0%,#103cad 100%);
+    border-radius: .4rem;
+    text-decoration: none;
+}
+.blog-post_imgbtn:hover{
+     background-image: linear-gradient(to right, #103cad 0%, #5fe3dc 100%);
+    color: #fff;
+}/* media query for view rooms card
+@media screen and (max-width: 1068px){
+    .blog-post{
+        max-width: 80rem;
+    }
+    .blog-post_img{
+        min-width: 30rem;
+        max-width: 30rem;
+    }
+}
+@media screen and (max-width: 868px){
+    .blog-post{
+        max-width: 70rem;
+    }
+}
+@media screen and (max-width: 768px){
+    .blog-post{
+        padding: 2.5rem;
+        flex-direction: column;
+    }
+    .blog-post_img{
+        min-width: 100%;
+        max-width: 100%;
+        transform: translate(0, -8rem);
+    }
+}*/
+*/
+/*Bootstrap template css*/
+.seticon{
+    margin-top: -26px;
+    padding-left: 10px;
+}
+.blog-post_imgbtn{
+    display: inline-block;
+    padding: 0.4rem 1.2rem;
+    letter-spacing: 1px;
+    text-transform: Uppercase;
+    font-size: 1rem;
+    color: #013d4a;
+    background-image: white ;
+    background-image: linear-gradient(to right, #10728c 0%,#88f3ed 100%);
+    border-radius: .4rem;
+    text-decoration: none;
+}
+.blog-post_imgbtn:hover{
+     background-image: linear-gradient(to right, #88f3ed 0%, #10728c 100%);
+    color: #013d4a;
+    text-decoration: none;
+}
+/* Add mess*/
+.headblock{
+    background: #013d4a;
+    height: 250px;
+    opacity:0.8;
+}
+.headblock h1{
+        font-family:Tahoma;
+        padding-top: 40px;
+}
+.addmessform{
+    background: #fff;
+    top:-130px;
+
+}
+.btnsubmit{
+    color: #013d41;
+    border-radius: 5px;
+    width: 100px;
+    height:40px;
+    padding: 10px;
+    border-style: none;
+    background-image: linear-gradient(to right, #10728c 0%,#88f3ed 100%);
+    font-weight: bold;
+}
+.btnsubmit:hover{
+     background-image: linear-gradient(to right, #88f3ed 0%, #10728c 100%);
+    color: #013d4a;
+    text-decoration: none;
+}
+.btnreset{
+     color: #013d41;
+    border-radius: 5px;
+    width: 100px;
+    height:40px;
+    padding: 10px;
+    border-style: none;
+    font-weight: bold;
+      background: #88f3ed;
+}
+.btnreset:hover {
+    color: #013d4a;
+    text-decoration: none;
+    background: #3297a8;
+}
+.btnupd{
+    color: #1670f0;
+    padding: 10px 20px;
+    font-size: 13px;
+    box-shadow: 0px 0px 5px #013d4a;
+    font-weight: bold;
+   }
+.btncan{
+     color: red;
+    padding: 10px 20px;
+    font-size: 13px;
+    box-shadow: 0px 0px 5px red;
+    font-weight: bold;
+}
+.cd:hover{color: #013d4a;
+    font-weight: 500;
+}
+
+.cd:before{
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: #013d4a;
+    z-index: -1;
+}
+.cd:after{
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: #fff;
+    z-index: -2;
+    filter: blur(5px);
+}
+.cd:before,
+.cd:after{
+    background: linear-gradient(235deg, #013d4a, #fff, #013d4a);
+}
+.cd .card-text{
+    line-height:0.9rem;
+}
+/*payment cards*/
+.cardplan{
+    border: none;
+    background: #fff;
+
+ }
+ .img-area img{
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    overflow: hidden;
+    border-radius: 50%;
+ }
+ .team-single:hover .side-two{
+    transform: rotateY(0deg);
+    border-radius: 5px;
+ }
+ .team-single:hover .side-one{
+    transform: rotateY(180deg);
+ }
+ .content-area{
+    transform: perspective(1000px);
+    transition: 1s;
+    transform-style: preserve-3d;
+    position: relative;
+ }
+ .side-one{
+    position: relative;
+    transform: rotateY(0deg);
+    z-index: 2;
+    margin-bottom: 30px;
+     box-shadow: 0px 0px 10px #013d4a;
+ }
+ .side-two{
+    position: absolute;
+    top:0;
+    left: 0;
+    background: #fff;
+    transform: rotateY(-180deg);
+     box-shadow:  0px 0px 10px #013d4a;
+ }
+ .side-one,
+ .side-two{
+    backface-visibility: hidden;
+    transition: 1s;
+    transform-style: preserve-3d;
+ }
+ .side-one .cardplan,
+ .side-two .cardplan{
+    min-height: 290px;
+ }

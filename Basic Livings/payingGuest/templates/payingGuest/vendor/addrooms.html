@@ -1,0 +1,466 @@
+{% extends 'payingGuest/vendor/basic.html' %}
+
+{% block title %}Add Rooms{% endblock %}
+
+{% block link %}
+{% load static %}
+<!-- Include Bootstrap CSS -->
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+
+<!-- Include SmartWizard CSS -->
+
+<link href='{% static "payingGuest/css/smart_wizard/smart_wizard.css"%}' rel="stylesheet" type="text/css" />
+<link href='{% static "payingGuest/css/smart_wizard/smart_wizard_theme_dots.css"%}' rel="stylesheet" type="text/css" />
+<!--<link rel="stylesheet" href='{% static "payingGuest/css/custom.css"%}'>-->
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<style>
+    .sw-theme-dots .sw-toolbar{
+        margin-bottom: 10px !important;
+    }
+
+    .upload_img {
+        border-radius: 8px;
+        height: 200px;
+        width: 100%;
+    }
+
+    #upload1 {
+        display: none;
+    }
+
+    .input-group-append {
+        width: 100%;
+        margin: auto;
+    }
+</style>
+{% endblock %}
+{% block css %}
+.nav-pills, .nav-tabs {
+margin-bottom: 0rem;
+}
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <br />
+
+            <!-- SmartWizard html -->
+            <div id="smartwizard" >
+                <ul class=" d-flex justify-content-center">
+                    <li><a href="#step-1" class="disabled">1<br /><small>Room Details</small></a></li>
+                    <li><a href="#step-2" class="disabled">2<br /><small>Image Upload</small></a></li>
+<!--                    <li><a href="#step-3">3<br /><small>Plan Selection </small></a></li>-->
+<!--                    <li><a href="#step-4" class="disabled">4<br /><small>Payment </small></a></li>-->
+                </ul>
+                <div>
+                    <div id="step-1">
+                        <h2 class="text-center">Enter Room Details</h2>
+                        <div id="form-step-0" role="form" data-toggle="validator" class="d-flex justify-content-center">
+                            <form action="{% url 'submit' %}" method="post" id="myForm" role="form" data-toggle="validator" accept-charset="utf-8">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <input type="text" name="description" class="form-control form-control-sm" id="description" required >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="totalBeds">No of bed</label>
+                                            <input type="number" name="totalBeds" class="form-control form-control-sm" id="totalBeds" max="6" min="1"   required >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="vacantCount">No of vacant bed</label>
+                                            <input type="number" name="vacantCount" class="form-control form-control-sm" id="vacantCount" min="1" required  >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="rent">Rent per bed</label>
+                                            <input type="number" name="rentPerBed" class="form-control form-control-sm" id="rent" max="20000" min="1"  required >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="deposit">Deposit</label>
+                                            <input type="number" name="deposit" class="form-control form-control-sm" id="deposit" min="1" max="50000" required >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="available">Available from</label>
+                                            <input type="date" class="form-control form-control-sm" id="available" value="{{ today }}" min="{{ today }}" name="available" required >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="Gender">Gender</label>
+                                            <select class="form-control form-control-sm" id="gender" name="gender" required >
+                                                <option selected disabled hidden>Select Gender</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                                <option value="Both">Both</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 ">
+                                        <div class="form-group">
+                                            <label for="address">Address</label><br>
+                                            <textarea class="form-control" name="address" id="address" rows="4"  required ></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="instruct">Special Instruction</label><br>
+                                            <textarea class="form-control" name="instructions" id="instruct" rows="4" required ></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="city">City</label><br/>
+                                        <select name="city" id="city" class="form-control form-control-sm" required  oninvalid="this.setCustomValidity('Please Select a valid City')">
+                                            <option></option>
+                                            {% for city in cities %}
+                                            <option value='{{city.city_id}}'>{{city.city_name}}</option>
+                                            {% endfor %}
+                                            <!--// fetch data using DB-->
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="area">Area</label>
+                                        <select class="form-control form-control-sm" id="area" name="area">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <br>
+                                        <div class="form-group">
+                                            <label for="amenities">Amenities</label>
+                                            <select  multiple class="form-control" id="amenities" name="amenities" required >
+                                                <option></option>
+                                                {% for amenity in amenities %}
+                                                <option value="{{amenity.amenities_name}}" >{{amenity.amenities_name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row d-flex justify-content-center">
+                                    <div class="">
+                                        <input type="submit" id="addroom" class="btn bg-primary font-weight-bold text-light mx-3" style="width: 10rem;letter-spacing: 2px;border-radius: 30px;padding: 10px 10px;"value="SAVE & PROCEED" name="submit">
+                                        <input type="reset" id="reset" class="btn btn-success font-weight-bold mx-3" style="width: 10rem;letter-spacing: 2px;border-radius: 30px;padding: 10px 10px;" value="RESET" name="submit">
+                                    </div>
+
+                                </div>
+<!--                                <h6 class="text-danger text-center">Save before proceeding!!</h6>-->
+
+                            </form>
+
+                        </div>
+                    </div>
+                    <div id="step-2">
+                        <h2 class="text-center">Upload Image</h2>
+                        <h5 style="color: red;text-align: center;">Uploading images not allowed later!!</h5>
+                        <div id="form-step-1" role="form" data-toggle="validator">
+                            <div class="col-md-12">
+                                <form action="{% url 'uploadPhotos' %}" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="row d-flex justify-content-center" id="imgContainer">
+                                        <div class="col-md-4 my-2">
+                                            <img id="imageResult1" src='{% static "payingGuest/image/logo.png" %}' alt="" class="img-fluid upload_img">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <!-- Upload image input-->
+                                        <div class="col-md-4"></div>
+                                        <div class="col-md-4">
+                                            <div class="input-group mb-3 px-2 py-2 rounded-pill bg-black shadow-sm">
+                                                <div class="input-group-append ">
+                                                    <!--suppress XmlInvalidId -->
+                                                    <label for="upload1" class="btn btn-light m-0 rounded-pill px-4 w-100"> <i class="fa fa-cloud-upload mr-2 text-muted"></i><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label>
+                                                    {{Form.image}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4"></div>
+                                        <div class="col-md-4">
+                                            <div class="form-group d-flex justify-content-center" style="width: 100%; margin: auto;">
+                                                <button type="submit" class="btn bg-primary font-weight-bold text-light mx-3" style="width: 10rem;letter-spacing: 5px;border-radius: 30px;">UPLOAD</button>
+                                                <button type="reset" onclick="this.form.reset();" class="btn btn-success font-weight-bold mx-3" style="width: 10rem;letter-spacing: 5px;border-radius: 30px;">RESET</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+<!--                    <div id="step-3">-->
+<!--                        <h2 class="text-center">Plans</h2>-->
+<!--                        <div class="row m-auto d-flex justify-content-center" style="width:90%;" id="plan">-->
+<!--                            {% for package in packages %}-->
+<!--                            <div class="col-md-4 col-sm-6 col-xs-12">-->
+<!--                                <div class="team-single">-->
+<!--                                    <div class="content-area" >-->
+<!--                                        <div class="side-one">-->
+<!--                                            <div class="card cardplan">-->
+<!--                                                <div class="cardhead text-center">-->
+<!--                                                    <h4>{{ package.title }}</h4>-->
+<!--                                                </div>-->
+<!--                                                <div class="card-body text-center d-flex justify-content-center">-->
+<!--                                                    <div class="img-area ">-->
+<!--                                                        <img  class="img-fluid" src='{% static "payingGuest/images/bg2.jpg" %}' alt="bg2.jpg">-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                                <div class="text-center"><p><b>Rs {{package.price}}</b></p></div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="side-two">-->
+<!--                                            <div class="card cardplan">-->
+<!--                                                <div class="card-body text-center mt-4">-->
+
+<!--                                                    <h5 style="text-align: centre;font-family: Roboto;">{{package.description}}</h5>-->
+<!--                                                    <button class="btn blog-post_imgbtn font-weight-bold">Apply</button>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            {% endfor %}-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div id="step-4">-->
+<!--                        <h2 class="text-center">Payment</h2>-->
+<!--                        <form method="post" action="addrooms/payment" id="paymentForm">-->
+<!--                            {% csrf_token %}-->
+<!--                            <div class="row payment" id="payment">-->
+<!--                            <div class="col-md-6 offset-3 col-sm-12 col-xs-12">-->
+<!--                                <div class="form-group">-->
+<!--                                    <label>CARD HOLDER NAME</label>-->
+<!--                                    <input type="text" class="form-control form-control-sm" name="cholder">-->
+<!--                                </div>-->
+<!--                                <div class="row">-->
+<!--                                    <div class="col-md-8 col-sm-12 col-xs-12">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label>CARD NUMBER</label>-->
+<!--                                            <input type="text" class="form-control form-control-sm" name="cnumber">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-4 col-sm-12 col-xs-12">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label>CVV/CVC</label>-->
+<!--                                            <input type="text" class="form-control form-control-sm" name="cvv">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="row">-->
+<!--                                    <div class="col-md-6 col-sm-12 col-xs-12">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label>EXPIRATION DATE</label>-->
+<!--                                            <input type="date" class="form-control form-control-sm " name="expdate">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="col-md-6 col-sm-12 col-xs-12">-->
+<!--                                        <div class="form-group">-->
+<!--                                            <label>AMOUNT</label>-->
+<!--                                            <input type="NUMBER" class="form-control form-control-sm" name="amount">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="form-group d-flex justify-content-center">-->
+<!--                                    <input class="form-control form-control-sm font-weight-bold btn btn-sm" id="btn" type="submit" name="submitpay" value="Pay">-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        </form>-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+{% load static %}
+<!-- Include jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<!-- Include jQuery Validator plugin -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
+
+
+<!-- Include SmartWizard JavaScript source -->
+<script type="text/javascript" src='{% static "payingGuest/js/jquery.smartWizard.js"%}'></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+        $(document).ready(function(){
+            // Smart Wizard
+            $('#smartwizard').smartWizard({
+                    selected: 0,
+                    theme: 'dots',
+                    toolbarSettings: {
+                        showPreviousButton: false, // show/hide a Previous button
+                        showNextButton: false,
+                    },
+                    transitionEffect:'fade',
+                    anchorSettings: {
+                                markDoneStep: true, // add done css
+                                markAllPreviousStepsAsDone: true, // When a step selected by url hash, all previous steps are marked done
+                                removeDoneStepOnNavigateBack: true, // While navigate back done step after active step will be cleared
+                                enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
+                            }
+                 });
+
+            $("#smartwizard").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
+                var elmForm = $("#form-step-" + stepNumber);
+                // stepDirection === 'forward' :- this condition allows to do the form validation
+                // only on forward navigation, that makes easy navigation on backwards still do the validation when going next
+                if(stepDirection === 'forward' && elmForm){
+                    elmForm.validator('validate');
+                    var elmErr = elmForm.children('.has-error');
+                    if(elmErr && elmErr.length > 0){
+                        // Form validation failed
+                        return false;
+                    }
+                }
+                return true;
+            });
+
+
+        });
+    </script>
+
+<script>
+$(document).ready(function() {
+    $('#amenities').select2({
+        placeholder: "Select Amenities"
+    });
+    $('#city').select2({
+        placeholder: "Select City"
+    });
+    $('#area').select2({
+        placeholder: "Select Area"
+    });
+});
+
+
+
+    $(function() {
+    // Multiple images preview in browser
+    var imagesPreview = function(input, imgContainer) {
+var html = '';
+        if (input.files) {
+            var filesAmount = input.files.length;
+
+            for (i = 0; i < filesAmount; i++) {
+                var reader = new FileReader();
+
+                reader.onload = function(event) {
+                    html += '<div class="col-md-4 my-2">';
+                    html += '<img src="'+event.target.result+'" alt="" class="img-fluid upload_img">';
+                    html += '</div>';
+                    $('#imgContainer').html(html);
+                }
+
+                reader.readAsDataURL(input.files[i]);
+            }
+        }
+
+    };
+
+    $('#upload1').on('change', function() {
+        imagesPreview(this, 'div#imgContainer');
+    });
+});
+</script>
+
+
+<!--Harsh-->
+<script>
+
+
+$('#city').on('change', function(e){
+var id = $(this).val();
+e.preventDefault();
+$.ajax({
+    url: 'area',
+    type: 'POST',
+    data: {id: id,
+			csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val()
+		},
+
+    success: function (data) {
+		var areas = JSON.parse(data);
+        console.log(areas);
+        var text;
+        if(areas.length==0){
+            text += `<option value="" hidden>----Not Available----</option>`;
+        }else{
+        text='<option></option>';
+            for(i=0; i<areas.length; i++){
+        	    text += `<option value='${areas[i][0]}'>${areas[i][1]}</option>`;
+            }
+        }
+		$('#area').html(text);
+
+		}
+});
+});
+
+
+</script>
+
+<script>
+    $('#totalBeds').on('change', function(e){
+    var count = $(this).val();
+        $('#vacantCount').attr("max", count);
+    } );
+</script>
+
+<!--<script>-->
+
+<!--    var d = new Date();-->
+<!--    var today = d.getFullYear();-->
+<!--    today += "-";-->
+
+<!--    if ( d.getMonth()>=1 && d.getMonth()<=9 ){-->
+<!--        today += "0";-->
+<!--    }-->
+<!--    today += d.getMonth() + "-" + d.getDate();-->
+<!--    alert(today);-->
+<!--    $('#available').on('mouseover', function(){-->
+<!--        $(this).attr("min", today);-->
+<!--    });-->
+<!--</script>-->
+
+<!--show hide payment-->
+<script type="text/javascript">
+    $(document).ready(function(){
+  $("#room").click(function(){
+    $(".payment").show();
+  });
+
+});
+</script>
+
+
+
+{% endblock %}

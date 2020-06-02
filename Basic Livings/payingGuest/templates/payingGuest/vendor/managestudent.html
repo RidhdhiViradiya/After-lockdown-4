@@ -1,0 +1,64 @@
+{% extends 'payingGuest/vendor/basic.html' %}
+
+{% block title %}Manage Students{% endblock %}
+
+{% block css %}
+.tbl{
+box-shadow: 0px 0px 10px #031d4a;
+border-radius: 4px;
+}
+.thead{
+background: #013d4a;
+color: white;
+}
+
+{% endblock %}
+
+{% block link %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+{% endblock %}
+
+{% block body %}
+<div class="container bg-white">
+<div class="table-responsive">
+            <table class="table table-hover table-borderless table-striped mt-2" id="myTable" style="width: 100%;">
+                <thead >
+                <tr class="table-primary">
+                    <th scope="col">Sr.</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Contact No.</th>
+                    <th scope="col">Remove</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for myBooking in myBookings %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ myBooking.user_id.get_full_name }}</td>
+                    <td>{{ myBooking.room_id.getAddress }}</td>
+                    <td>{{ myBooking.user_id.get_email }}</td>
+                    <td>{{ myBooking.user_id.get_phone }}</td>
+                    <td style="padding-left:30px"><a href="/payingGuest/vendor/managestudent/delete?id={{ myBooking.booking_id }}"><i class="fa fa-trash" style="color:red"></i></a></td>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+</div>
+</div>
+{% endblock %}
+
+{% block script %}
+
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+    $('#myTable').DataTable();
+} );
+</script>
+{% endblock %}

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>{% block title %}{% endblock %}</title>
+  <meta content="" name="descriptison">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+<!--  <link href="assets/img/favicon.png" rel="icon">-->
+<!--  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">-->
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href='{% static "payingGuest/css/bootstrap.css" %}' rel="stylesheet">
+  <link href='{% static "payingGuest/icons/icofont/icofont.min.css" %}' rel="stylesheet">
+  <link href='{% static "payingGuest/css/boxicons/boxicons.min.css" %}' rel="stylesheet">
+  <link href='{% static "payingGuest/css/venobox.css" %}' rel="stylesheet">
+  <link href='{% static "payingGuest/css/owl.carousel.min.css" %}' rel="stylesheet">
+  <link href='{% static "payingGuest/animations/css/aos.css" %}' rel="stylesheet">
+  <link href='{% static "payingGuest/icons/css/all.css" %}' rel="stylesheet">
+<!--  <link href='{% static "payingGuest/icons/ionicons/css/ionicons.min.css" %}' rel="stylesheet">-->
+  <!-- Template Main CSS File -->
+  <link href='{% static "payingGuest/css/style.css" %}' rel="stylesheet">
+   <!-- Template Main CSS File -->
+  <link href='{% static "payingGuest/css/aanandstyle1.css"%}' rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css">
+  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="shortcut icon" type="icon/ico" href='{% static "icons/logo1.ico" %}'>
+
+    {% block link %}{% endblock %}
+    <style>
+    .fields {
+
+                width: 100%;
+                border: 0px;
+                background-color: transparent;
+
+                }
+
+                .fieldsBack {
+                    background-color: white !important;
+                    border: 1px solid darkgrey !important;
+                    color: black  !important;
+                    border-radius: 6px;
+                    padding-left: 5px;
+                }
+        {% block css %}{% endblock %}
+    </style>
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex">
+
+      <div class="logo mr-auto app">
+        <h1 class="text-light"><a href="{% url 'main_home' %}"><img src='{% static "icons/logo1.ico" %}'  style="margin-top: -10px;" class="img-fluid" alt=""><span>Basic - Livings</span></a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          <li class="active"><a href="{% url 'main_home' %}"><i class="fa fa-home"></i>&nbsp;Home</a></li>
+          {% if user.is_authenticated %}
+
+             <li class="drop-down"><a href="">Profile</a>
+          <ul>
+            <li><a style="background: transparent" href=" {% url 'logout' %} ">Logout<i class="ml-2 fas fa-sign-out-alt fa-lg"  data-toggle="tooltip" data-placement="bottom" title="Logout"></i></a></li>
+            <li><a data-toggle="modal" data-target="#profileModal">Details<i class="ml-2 fas fa-user-circle fa-lg"  data-toggle="tooltip" data-placement="bottom" title="Profile"></i></a></li>
+            <li><a data-toggle="modal" data-target="#changeModal">Change Password<i class="ml-2 fa fa-lock"></i></a></li>
+          </ul>
+        </li>
+
+        {% else %}
+        <li><a href="{% url 'login_register' %}"><i class="fa fa-user-o fa-lg red-tooltip"  data-toggle="tooltip" data-placement="bottom" title="Login/Signup"></i></a></li>
+        {% endif %}
+        </ul>
+      </nav><!-- .nav-menu -->
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-6 pt-5 head pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center" data-aos="fade-up">
+          <div class="text-center">
+		    <h1  style="font-size: 41px">Welcome to Basic - Livings</h1>
+            <h2>{% block hero %}{% endblock %}</h2>
+            <a href="{% url 'pg_vendor_index' %}" class="btn-get-started scrollto text-center" style="width: 164px">Vendor</a>
+<!--			<a href="#about" class="btn-get-started scrollto">Paying Guest</a>-->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section><!-- End Hero -->
+
+  <main id="main">
+      {% block body %}{% endblock %}
+    <!-- ======= Contact Section ======= -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6">
+            <div class="footer-info">
+              <h3>Basic - Livings</h3>
+              <p>
+               SDJ International College,<br> near Indian Diamond Institute, Someshwara Enclave, Vesu,<br> Surat, Gujarat 395007<br><br>
+                <strong>Phone:</strong> +91 6353693537<br>
+                <strong>Email:</strong> basiclivings123@gmail.com<br>
+              </p>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'main_home' %}#hero">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'main_home' %}#about">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'main_home' %}#services">Services</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'main_home' %}#contact">Contact us</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-3 col-md-6 footer-links">
+             <h4>Let's Keep in Touch</h4>
+             <div class="social-links mt-3 ml-2">
+                <a href="https://twitter.com/home?lang=en" class="twitter"><i class="bx bxl-twitter"></i></a>
+                <a href="https://www.facebook.com/home.php?ref=wizard" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="https://www.instagram.com/?hl=en" class="instagram"><i class="bx bxl-instagram"></i></a>
+              </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Basic-Livings</span></strong>. All Rights Reserved
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top"><i class="bx bxs-up-arrow-alt"></i></a>
+
+<!--  Profile Modal-->
+  <div class="modal fade" id="profileModal" tabindex="-1" style="background-color: transparent;" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="box-shadow: none;">
+            <div class="modal-content" style="background-color: transparent; border: 0px;">
+                <div class="modal-header" style="background:#5FB1CE; color:white;border-radius: 30px;" >
+                    <h5 class="modal-title text-light" id="profileModalLabel">Your Profile<i class="fa fa-pencil mx-3"  id="editBtn"  data-toggle="tooltip" data-placement="bottom" title="Click to Edit Profile" style="cursor: pointer;"></i></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color:white" >&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body my-2 mx-auto" style="width: 90%;border-radius: 1.3rem;background-color: white;">
+                    <form action="{% url 'update_user' %}" method="post" name="myForm">
+                        {% csrf_token %}
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <td><b>Name</b></td>
+                            <td><input type="text" disabled class="fields" name="firstname" value="{{user.short_name}}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Address</b></td>
+                            <td><textarea type="text" rows="2" disabled class="fields" name="address" >{{user.get_address}}</textarea></td>
+                        </tr>
+                        <tr>
+                            <td><b>Mobile</b></td>
+                            <td><input type="tel" disabled class="fields" name="phone" value="{{user.get_phone}}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Email</b></td>
+                            <td><input type="email" disabled class="fields" name="email" value="{{user.get_email}}"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Gender</b></td>
+                            <td>
+                                <select disabled class="fields" name="gender">
+                                <option value="Male" {% if user.get_gender == 'Male' %} selected {% endif %}>Male</option>
+                                <option value="Female"{% if user.get_gender == 'Female' %} selected {% endif %}>Female</option>
+                            </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Email</b></td>
+                            <td>
+                                <input type="checkbox" disabled class="check" name="is_student" value="1" id="student" {% if user.is_student %} checked {% endif %} ><label for="student">Student</label><br>
+                                <input type="checkbox" disabled class="check" name="is_pgVendor" value="1" id="pg" {% if user.is_pgVendor %} checked {% endif %} ><label for="pg">Paying Guest Vendor</label><br>
+                                <input type="checkbox" disabled class="check" name="is_foodVendor" value="1" id="mess" {% if user.is_foodVendor %} checked {% endif %} ><label for="mess">Mess Vendor</label><br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                        <button type="button" style="border-radius: 20px;" class="btn btn-danger float-right  font-weight-bold text-10 mx-2" data-dismiss="modal">Close</button>
+                        <button type="submit" id="submit" disabled name="submit" style="border-radius: 20px;" class="btn btn-primary float-right  font-weight-bold text-10">Save</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+  <!--Change PWD modal-->
+<div class="modal animated pulse" id="changeModal" tabindex="-1" role="dialog" aria-labelledby="changeModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document" style="box-shadow: none;">
+            <div class="modal-content" style="background-color: transparent; border: 0px;">
+                <div class="modal-header" style="background:#5FB1CE; color:white;border-radius: 30px;" >
+                    <h5 class="modal-title text-light" id="changeModalLabel">Change Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color:white">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body my-2 mx-auto" style="width: 90%;border-radius: 1.3rem;background-color: white;">
+
+                    <form method="post" action="{% url 'change_password' %}" name="change">
+                        {% csrf_token %}
+                        <div class="form-group mb-2">
+                                <label for="id_old_password">Old Password</label>
+                                {{ form.old_password }}
+                        </div>
+                        <div class="form-group mb-2">
+                                <label for="id_new_password1">Enter New Password</label>
+                                {{ form.new_password1 }}
+                        </div>
+                        <div class="form-group mb-2">
+                                <label for="id_new_password2">Re-enter New Password</label>
+                                {{ form.new_password2 }}
+                            {{ form.new_password2.help_text }}
+                        </div>
+                        <div class="form-group">
+                            <div class="m-auto">
+                            <button type="submit" id="submitchange"  name="submit" style="border-radius: 20px;" class="btn btn-primary   font-weight-bold text-10">Save</button>
+                            <button type="button" style="border-radius: 20px;" class="btn btn-danger font-weight-bold text-10 mx-2" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+
+                    </form>
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+  <!-- Vendor JS Files -->
+  <script src='{% static "payingGuest/js/jquery.min.js" %}'></script>
+  <script src='{% static "payingGuest/js/popper.min.js" %}'></script>
+  <script src='{% static "payingGuest/js/bootstrap.bundle.min.js" %}'></script>
+  <script src='{% static "payingGuest/js/jquery.easing.min.js" %}'></script>
+  <script src='{% static "payingGuest/js/isotope.pkgd.min.js" %}'></script>
+  <script src='{% static "payingGuest/js/venobox.min.js" %}'></script>
+  <script src='{% static "payingGuest/js/owl.carousel.min.js" %}'></script>
+  <script src='{% static "payingGuest/animations/js/aos.js" %}'></script>
+
+  <!-- Template Main JS File -->
+  <script src='{% static "payingGuest/js/main.js" %}'></script>
+  <script>
+    $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
+
+ $('#editBtn').click(function(){
+               $("#profileModal").find(".fields").attr('disabled', function(_, attr){ return !attr});
+               $("#profileModal").find(".check").attr('disabled', function(_, attr){ return !attr});
+               $("#submit").attr('disabled', function(_, attr){ return !attr});
+                $("#profileModal").find(".fields").toggleClass('fieldsBack');
+
+            });
+        $(document).ready(function(){
+                $('#changeModal').find('input').addClass('form-control');
+           });
+
+
+  </script>
+  {% block script %}{% endblock %}
+
+</body>
+
+</html>

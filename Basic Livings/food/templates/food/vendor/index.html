@@ -1,0 +1,100 @@
+{% extends 'food/vendor/basic.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+<!--            Cards-->
+              <div class="container-fluid">
+                <div class="row text-center">
+                    <div class="col-md-4 col-sm-12 col-xs-12 d-flex justify-content-center">
+                        <div class="card cards">
+                            <div class="face face1">
+                                <div class="content">
+                                    <h2>Service One</h2>
+                                    <p>Add Mess here</p>
+                                    <a href="addmess" class="blog-post_imgbtn">ADD MESS</a>
+
+                                </div>
+                            </div>
+                            <div class="face face2">
+                                <h5><i class="hidefa fa fa-home text-white"></i><sup><i class="hidefa fa fa-plus text-white"style="font-size:15px;"></i></sup><br>Add Mess</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12 d-flex justify-content-center">
+                        <div class="card cards">
+                            <div class="face face1">
+                                <div class="content">
+                                    <h2>Service Two</h2>
+                                    <p>View Mess here</p>
+                                    <a href="viewmess" class="blog-post_imgbtn">VIEW MESS</a>
+                                </div>
+                            </div>
+                            <div class="face face2">
+                                <h5><i class="hidefa fa fa-university text-white"></i><br>View Mess</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12 d-flex justify-content-center">
+                        <div class="card cards">
+                            <div class="face face1">
+                                <div class="content">
+                                    <h2>Service Three</h2>
+                                    <p>Student details</p>
+                                    <a href="managestudent" class="blog-post_imgbtn">VIEW STUDENT</a>
+                                </div>
+                            </div>
+                            <div class="face face2">
+                                <h5><i class="hidefa fa fa-users text-white"></i><br>Students</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div><br>
+                <div class="row text-center">
+                    <div class="col-md-4 col-sm-12 col-xs-12 d-flex justify-content-center">
+                        <div class="card cards">
+                            <div class="face face1">
+                                <div class="content">
+                                    <h2>Service Four</h2>
+                                    <p>Manage Newsletter</p>
+                                    <a href="manageEmail" class="blog-post_imgbtn">MANAGE EMAIL</a>
+                                </div>
+                            </div>
+                            <div class="face face2">
+                                <h5><i class="hidefa fa fa-envelope text-white"></i><br>Manage<br> Email</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12 d-flex justify-content-center">
+                        <div class="card cards">
+                            <div class="face face1">
+                                <div class="content">
+                                    <h2>Service Five</h2>
+                                    <p>Add Food Types</p>
+                                    <a href="addfoodtype" class="blog-post_imgbtn">ADD FOOD TYPE</a>
+                                </div>
+                            </div>
+                            <div class="face face2">
+                                <h5><i class="hidefa fas fa-utensils text-white"></i><br>Add Food<br>Type</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12 d-flex justify-content-center">
+                        <div class="card cards">
+                            <div class="face face1">
+                                <div class="content">
+                                    <h2>Service Six</h2>
+                                    <p>View Food Type</p>
+                                    <a href="viewfoodtype" class="blog-post_imgbtn">VIEW FOOD TYPE</a>
+                                </div>
+                            </div>
+                            <div class="face face2">
+                                <h5><i class="hidefa fas fa-search text-white"></i><br>View Food<br>Type</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<br>
+
+{% endblock %}

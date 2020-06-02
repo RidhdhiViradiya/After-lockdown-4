@@ -1,0 +1,382 @@
+/*My css(ridhdhi)*/
+/* dashboared*/
+.cards{
+border-radius: 5px;
+ background: #fff;
+ transition: 0.5s ease-in-out;
+ cursor: pointer;
+ height: 20rem;
+ width: 100%;
+ margin: 6px;
+}
+.cards:hover{
+    box-shadow: 5px 5px 15px #013d4a;
+}
+.cards .face{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cards .face .content {
+    margin-top: 15%;
+}
+.cards .face .content p, .cards .face .content h2{
+    text-align: center;
+    background: #fff;
+    color: #09596b;
+    padding-top: 30px;
+}
+.cards .face .content a{
+    width: 100%;
+    background-image: linear-gradient(to left, #6a98b3 0%,#3bbeff 100%);
+    border-radius: 20px;
+    transition: 2s ease;
+
+}
+.cards .face .content a:hover, .cards .face .content a:focus{
+    background-image: linear-gradient(to left, #003690 0%,#a8edff 100%);
+    color: #ffffff;
+    border-radius: 50px;
+}
+
+.cards .face .face1 .content h2{
+    margin-top: 60px;
+}
+.cards .face2{
+     border-radius: 5px;
+    background: linear-gradient(to right, #8abdd2, #5fb1ce, #336984);
+    transition: 0.5s;
+    color: #fff;
+}
+.cards:hover .face2{
+    height: 80px;
+    width: 160px;
+    border-radius: 5%;
+    margin-top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: transparent;
+    border: 2px solid  #013d4a;
+}
+.cards:hover .face2 .hidefa{
+    display: none;
+}
+.cards .face2 h5{
+    margin: 0;
+    padding: 0;
+    font-size: 3em;
+    color: #fff;
+    transition: 0.5s ease-in-out;
+}
+.cards:hover .face2 h5{
+    margin-top: -20%;
+    color: #013d4a;
+    font-size: 2em;
+    font-weight: 600;
+}
+/* End of dashboared*/
+.head{
+    font-family: 'leto', sans-serif;
+    border: 1px solid green;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-left: none;
+    border-right: none;
+    color: #062c8f;
+    font-weight: 700;
+    background-image: linear-gradient(to top, #103cad 0%,#5fe3dc 100%);
+}
+/* Add Rooms*/
+.form label{
+    font-size : 14px;
+     color: #062c8f;
+    font-weight: 600;
+}
+.formstyle input,.formstyle select,.formstyle textarea, .formstyle select option{
+    border-color:#013d4a;
+    color: #013d4a;
+}
+.formstyle input:focus,.formstyle select:focus,.formstyle textarea:focus{
+    border-color: #013d4a;
+}
+/*image Uploader*/
+
+#upload, #upload1, #upload2 {
+    opacity: 0;
+}
+#upload-label, #upload-label1, #upload-label2  {
+    position: absolute;
+    top: 50%;
+
+    transform: translateY(-50%);
+}
+
+.image-area {
+    border: 2px solid #013d4a;
+    padding: 1rem;
+    position: relative;
+
+}
+.imgstyle{
+    height:250px;
+    width: 250px;
+}
+.image-area::before {
+    content: 'Uploaded image result';
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.8rem;
+    z-index: 1;
+}
+
+.image-area img {
+    z-index: 2;
+    position: relative;
+    height: 220px;
+}
+/*
+*
+* ==========================================
+* FOR DEMO PURPOSES
+* ==========================================
+*
+*/
+/* css for view rooms*/
+#view{
+    font-family : 'Robono', sans-serif;
+    font-size: 10px;
+}
+#viewimg{
+    width: 100%;
+}
+.blog-post{
+    width: 100%;
+    max-width: 98rem;
+    padding: 2rem;
+    margin: 1rem;
+    background-color: #fff;
+    box-shadow: 0 1.4rem 8rem rgba(0,0,0,.2);
+    display:flex;
+    align-items: center;
+    border-radius: 2rem;
+    font-family: Arial Unicode MS !important;
+}
+.blog-post_img{
+    min-width: 25rem;
+    max-width: 25rem;
+    height: 16rem;
+    transform: translateX(-4rem);
+    position: relative;
+}
+.blog-post_img .viewimg{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: .8rem;
+}
+.blog-post_img::before{
+    content: '';
+    width:100%;
+    height: 100%;
+    position:absolute;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(to right, rgba(10, 78, 59, 0.8),
+                                          rgba(59, 207, 214, 0.8));
+    box-shadow: .5rem .5rem 3rem 1px rgba(0, 0, 0, .05);
+    border-radius: .6rem;
+}
+.blog-post_date span{
+    display: block;
+    color: rgba(0,0,0,.5);
+    font-size: 1.3rem;
+    font-weight: 600;
+
+}
+.blog-post_title{
+    font-size: 2.0rem;
+    font-weight: bold;
+    text-decoration: uppercase;
+    color: #3f6ad8;
+}
+.blog-post_text{
+    font-size: 1.1rem;
+    color: rgba(0,0,0,.7);
+}
+
+.blog-post .customBtn {
+letter-spacing: 0.2rem;
+border-radius: 20px;
+background-color: #3f6ad8;
+min-width: fit-content;
+text-decoration: none;
+transition: 0.7s ease;
+color: white;
+margin-right: 10px;
+margin-top: 10px;
+}
+
+.customBtn:hover {
+    text-decoration: none;
+    transform: scale(1.2);
+    border: 1px solid #3f6ad8;
+    color: #3f6ad8;
+    background-color: white;
+}
+
+/*
+.blog-post_cta{
+    display: inline-block;
+    padding: 0.6rem 2.1rem;
+    letter-spacing: 1px;
+    text-transform: Uppercase;
+    font-size: 1.2rem;
+    color: #fff;
+     background-image: linear-gradient(to right, #5fe3dc 0%,#103cad 100%);
+    border-radius: .4rem;
+    text-decoration: none;
+}
+.blog-post_cta:hover{
+     background-image: linear-gradient(to right, #103cad 0%, #5fe3dc 100%);
+    color: #fff;
+}*/
+.blog-post_imgbtn{
+    display: inline-block;
+    margin-top: 3rem;
+    padding: 0.6rem 2.1rem;
+    letter-spacing: 1px;
+    text-transform: Uppercase;
+    font-size: 1rem;
+    color: white;
+    background-image: white ;
+    background-image: linear-gradient(to right, #10728c 0%,#88f3ed 100%);
+    border-radius: 6rem;
+    text-decoration: none;
+    width: 90%;
+    transition: 0.8s ease;
+}
+.blog-post_imgbtn:hover{
+     background-image: linear-gradient(to right, #88f3ed 0%, #10728c 100%);
+    color: #013d4a;
+    text-decoration: none;
+}
+/* media css for view rooms card */
+@media screen and (max-width: 1068px){
+    .blog-post{
+        max-width: 80rem;
+        border-radius: 20px;
+    }
+    .blog-post_img{
+        min-width: 30rem;
+        max-width: 30rem;
+    }
+}/*
+@media screen and (max-width: 868px){
+    .blog-post{
+        max-width: 70rem;
+        border-radius: 20px;
+    }
+}*/
+@media screen and (max-width: 890px){
+    .blog-post{/*
+        padding: 2.5rem;*/
+        flex-direction: column;
+        border-radius: 20px;
+        margin: 0px;
+    }
+    .blog-post_img{
+        min-width: 100%;
+        max-width: 100%;
+        transform: translate(0, -8rem);
+    }
+}
+
+/*Bootstrap template css*/
+/* manage payment */
+.container .paymentcard{
+    width: 100%;
+    height: auto;
+    background:#013d4a;
+}
+.navtabs{
+    height: auto;
+}
+.navtabs li a{
+    color: #fff;
+    font-size: 20px;
+}
+.maincontent{
+    overflow: scroll;
+    overflow-x: hidden;
+    background:#fff;
+    height:320px;
+    padding-top: 10px;
+    padding-left: 10px;
+    margin: -14px 17px 17px 17px;
+    border-radius: 3px;
+}
+.seticon{
+    margin-top: -26px;
+    padding-left: 10px;
+}
+ /* Extend Room exp date */
+ .cardplan{
+    border: none;
+    background: #fff;
+ }
+ .img-area img{
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    overflow: hidden;
+    border-radius: 50%;
+ }
+ .team-single:hover .side-two{
+    transform: rotateY(0deg);
+    border-radius: 5px;
+ }
+ .team-single:hover .side-one{
+    transform: rotateY(180deg);
+ }
+ .content-area{
+    transform: perspective(1000px);
+    transition: 1s;
+    transform-style: preserve-3d;
+    position: relative;
+ }
+ .side-one{
+    position: relative;
+    transform: rotateY(0deg);
+    z-index: 2;
+    margin-bottom: 30px;
+     box-shadow: 0px 0px 10px #013d4a;
+ }
+ .side-two{
+    position: absolute;
+    top:0;
+    left: 0;
+    background: #fff;
+    transform: rotateY(-180deg);
+     box-shadow:  0px 0px 10px #013d4a;
+ }
+ .side-one,
+ .side-two{
+    backface-visibility: hidden;
+    transition: 1s;
+    transform-style: preserve-3d;
+ }
+ .side-one .cardplan,
+ .side-two .cardplan{
+    min-height: 290px;
+ }

@@ -1,0 +1,335 @@
+{% extends 'payingGuest/basic.html' %}
+{% block title %}View Room{% endblock %}
+{% block css %}
+#hero{
+display: none;
+}
+.roomcarousal .sliderimg{
+height: 440px;
+}
+.carouseltext{
+font-size: 1.5rem;
+}
+.carousel-indicators li{
+height: 18px;
+width: 18px;
+border-radius: 50%;
+}
+.carousel-control-prev-icon, .carousel-control-next-icon {
+display: inline-block;
+width: 45px;
+height: 45px;
+background-color: rgba(0,0,0,.6);
+border: 3px solid white;
+border-radius: 50%;
+}
+.sr-only{
+color: black;
+}
+{% endblock %}
+
+
+{% block body %}
+{% load static %}
+<br><br><br>
+<div class="container slider">
+    <div class="row pgslider">
+        <div class="col-md-10 d-flex justify-content-center pgslidercol " style="margin-left:100px;">
+            <div id="carouselExampleIndicators" class="w-100 carousel slide roomcarousal" style="border-radius: 2rem;" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    {% if counter > 0 %}
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+
+                    {% for room in room_images %}
+                    {% if forloop.counter > 1 %}
+                    <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter|add:'-1' }}"></li>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% else %}
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    {% endif %}
+                </ol>
+                <div class="carousel-inner">
+
+                    {% if counter > 0 %}
+
+                    <div class="carousel-item active" style="border-radius: 2rem;">
+                        <img class="d-block w-100 sliderimg"  style="border-radius: 2rem;" onerror="this.src='/media/payingGuest/images/defaults/default.jpg'"   src='/media/{{ room_images.0.image_path }}' alt="Room Image">
+                    </div>
+
+                    {% for room in room_images %}
+                    {% if forloop.counter > 1 %}
+                    <div class="carousel-item"  style="border-radius: 2rem;">
+                        <img class="d-block w-100 sliderimg"  style="border-radius: 2rem;" onerror="this.src='/media/payingGuest/images/defaults/default.jpg'"  src='/media/{{ room.image_path }}' alt="Room Image">
+                        <div class="carousel-caption d-none d-md-block">
+                            <p class="carouseltext">{{ room.description }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% else %}
+                    <div class="carousel-item active w-100" >
+                        <img class="d-block w-100 sliderimg" style="border-radius: 2rem;"  onerror="this.src='/media/payingGuest/images/defaults/default.jpg'"  src='/media/payingGuest/images/defaults/default.jpg' alt="First slide">
+                    </div>
+                    {% endif %}
+
+                </div>
+
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev" title="Previous">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next"  title="Next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<section>
+    <div class="container">
+        <!-- ======= Intro Single ======= -->
+        <section class="intro-single">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-lg-8">
+                        <div class="title-single-box">
+                            <h1 class="title-single">{{ room.description }}</h1>
+                            <span class="color-text-a">{{ room.area_id.city_id.city_name }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!-- End Intro Single-->
+        <!-- ======= Property Single ======= -->
+        <section class="property-single nav-arrow-b">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row justify-content-between">
+                            <div class="col-md-5 col-lg-4">
+                                <div class="property-price d-flex justify-content-center foo">
+                                    <div class="card-header-c d-flex">
+                                        <div class="card-box-ico">
+                                            <span class="ion-money">₹</span>
+                                        </div>
+                                        <div class="card-title-c align-self-center">
+                                            <h5 class="title-c"  data-toggle="tooltip" data-placement="bottom" title="Rent Per Bed" >{{room.rent_per_bed}}*</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="property-summary">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="title-box-d section-t4">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-7 col-lg-7 section-md-t3">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="title-box-d">
+                                            <h3 class="title-d">Room Description</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="summary-list">
+                                    <ul class="list">
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Name</strong>
+                                            <span>{{room.description}}</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Address</strong>
+                                            <span>{{room.address}}</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Beds</strong>
+                                            <span>{{room.vacant_beds}} / {{room.no_of_beds}}</span>
+                                        </li>
+                                        <li class="d-flex justify-content-between">
+                                            <strong>Gender</strong>
+                                            <span>{{room.gender}}</span>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        {% if special %}
+                        <div class="col-md-12 col-sm-12 ">
+                            <div class="title-box-d">
+                                <h3 class="title-d">Special Instructions</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-10 mb-4 offset-1 col-sm-12 ">
+                            <div class="amenities-list color-text-a">
+                                <ul class="list-a no-margin">
+                                    {% for spe in special %}
+                                    {% if spe %}
+                                    <li>{{spe}}</li>
+                                    {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="col-md-12 col-sm-12 ">
+                            <div class="title-box-d">
+                                <h3 class="title-d">Amenities</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-10 offset-1 col-sm-12 ">
+                            <div class="amenities-list color-text-a">
+                                <ul class="list-a no-margin">
+                                    {% for amenity in amenities %}
+                                    {% if amenity %}
+                                    <li>{{amenity}}</li>
+                                    {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="row section-t3">
+                                <div class="col-sm-12">
+                                    <div class="title-box-d">
+                                        <h3 class="title-d">Contact Agent</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-lg-4">
+                                </div>
+                                <div class="col-md-12 col-lg-4">
+                                    <div class="property-contact">
+                                        {% if failure %}
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            <strong> {{ failure }} </strong>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        {% endif %}
+                                        {% if success %}
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <strong> {{ success }} </strong>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        {% endif %}
+                                        <form class="form-a" method="post" action="">
+                                            {% csrf_token %}
+                                            <div class="row">
+
+                                                <div class="col-md-12 mb-1">
+                                                    <div class="form-group">
+                                                        <input type="text" name="sender" class="form-control form-control-lg form-control-a" id="inputName" placeholder="Name *" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-1">
+                                                    <div class="form-group">
+                                                        <input type="email" name="email"  class="form-control form-control-lg form-control-a" id="inputEmail1" placeholder="Email *" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-1">
+                                                    <div class="form-group">
+                                                        <textarea id="textMessage" name="comment"  class="form-control" placeholder="Message *" cols="45" rows="8" required></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <button type="submit" class="btn btn-block bg-primary text-light">Schedule Appointment</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        {% if room.vacant_beds > 0 %}
+                                        <h2 class="text-center mt-2">OR</h2>
+                                        {% if user.is_authenticated %}
+                                        <a class="btn btn-block btn-success"href="#apply" data-toggle="modal" >Book Now</a>
+                                        {% else %}
+                                        <a class="btn btn-block btn-success"href="/accounts/" >Login to Book !!</a>
+                                        {% endif %}
+                                        {% else %}
+                                        <h3 class="d-flex justify-content-center" style="color: red; font-weight: bold;">Currently Unavailable!!</h3>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!-- End Property Single-->
+    </div>
+</section>
+
+
+<div class="modal fade" id="apply" tabindex="-1" role="dialog" aria-labelledby="applymodal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" >
+                <h5 class="modal-title" id="applymodalTitle">Book Room</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form" action="book" name="bookmess" method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <input type="text" name="fnm" disabled class="form-control form-control-sm" value="{{ user.short_name }}" required placeholder="Enter First Name"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <input type="text" name="lnm" disabled class="form-control form-control-sm" value="{{ user.get_last_name }}" required placeholder="Enter Last Name"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <input type="tel" name="cno" disabled class="form-control form-control-sm" value="{{ user.get_phone }}" required placeholder="Enter Contact Number"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <input type="email" name="email" disabled class="form-control form-control-sm" value="{{ user.get_email }}" required placeholder="Enter Email"/>
+                            </div>
+                        </div>
+                        <div class="col-md-8 offset-2 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <textarea class="form-control form-control-sm" rows="4" disabled placeholder="Address" required>{{user.get_address}}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-block btn-primary">Book</button>
+                    <button type="button" class="btn btn-block btn-danger" data-dismiss="modal">Close</button>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

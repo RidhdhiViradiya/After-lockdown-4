@@ -1,0 +1,287 @@
+{% extends 'payingGuest/vendor/basic.html' %}
+
+{% block title %}View Rooms{% endblock %}
+{% block css %}
+.blog-post_imgbtn{
+width: 130px;
+height:2.4rem;
+}
+.blog-post_imgbtn a:hover{
+text-decoration: none;
+}
+
+
+#wrapper {
+background-color: #fff;
+border: 1px solid #ccc;
+width: 100%;
+height: 100%;
+padding: 0px;
+border-radius: 10px;
+position: absolute;
+
+box-shadow: 0 0 10px #ccd;
+}
+.carousel,
+.carousel div {
+width: 100%;
+height: 100%;
+overflow: hidden;
+}
+
+.caroufredsel_wrapper{
+
+height: 100% !important;
+width: 100% !important;
+border-radius: 10px;
+}
+
+#carous{
+width: 100% !important;
+height: -webkit-fill-available !important;
+}
+
+#carous img {
+
+max-width: -webkit-fill-available!important;
+
+}
+
+#addBtn {
+background-color: #3F6AD8;
+color: white;
+letter-spacing: 3px;
+border-radius: 25px;
+width: fit-content;
+margin: auto;
+transition: 0.8s ease;
+padding: 15px 30px;
+margin-top:15px;
+box-shadow: 2px 2px 4px #000000;
+}
+
+#addBtn:hover  {
+transform: scale(0.9,0.9);
+background-color: white;
+color: #3F6AD8;
+border: 1px solid #3F6AD8;
+}
+
+.tooltip-arrow,
+.red-tooltip + .tooltip > .tooltip-inner {background-color: red;}
+
+.fields {
+
+max-width: 7rem;
+border: 0px;
+background-color: transparent;
+
+}
+
+.spclfields {
+
+max-width: 7rem;
+border: 0px;
+background-color: transparent;
+
+}
+
+
+.fieldsBack {
+    background-color: white !important;
+    border: 1px solid darkgrey !important;
+    color: black  !important;
+    border-radius: 6px;
+    padding-left: 5px;
+}
+
+.mybtn {
+    max-width: max-content;
+    display: inline;
+}
+
+{% endblock %}
+
+{% block script %}
+{% load static %}
+<script src='{% static "payingGuest/js/jquery.min.js" %}'></script>
+<script src='{% static "payingGuest/js/jquery.carouFredSel-6.0.4-packed.js" %}'></script>
+
+<script type="text/javascript">
+			$(function() {
+
+				var dur = 1000;
+				var pDur = 3000;
+
+				$('.carousel').carouFredSel({
+					items: {
+						visible: 1,
+						width: 700,
+						height: 420
+					},
+					scroll: {
+						fx: 'fade',
+						easing: 'linear',
+						duration: dur,
+						timeoutDuration: pDur,
+						onBefore: function( data ) {
+							animate( data.items.visible, pDur + ( dur * 3 ) );
+						},
+						onAfter: function( data ) {
+							data.items.old.find( 'img' ).stop().css({
+								width: 700,
+								height: 420,
+								marginTop: 0,
+								marginLeft: 0
+							});
+						}
+					},
+					onCreate: function( data ) {
+						animate( data.items, pDur + ( dur *2 ) );
+					}
+				});
+
+				function animate( item, dur ) {
+					var obj = {
+						width: 900,
+						height: 540
+					};
+					switch( Math.ceil( Math.random() * 2 ) ) {
+						case 1:
+							obj.marginTop = 0;
+							break;
+						case 2:
+							obj.marginTop = -120
+							break;
+					}
+					switch( Math.ceil( Math.random() * 2 ) ) {
+						case 1:
+							obj.marginLeft = 0;
+							break;
+						case 2:
+							obj.marginLeft = -200
+							break;
+					}
+					item.find( 'img' ).animate(obj, dur, 'linear' );
+				}
+
+			});
+		</script>
+<script>
+    $(".mybtn").click(function(){
+        var id = $(this).parent().parent().parent().parent().attr("id");
+        var makeId = "#"+id;
+        var idd = makeId.charAt( makeId.length - 1 );
+        var ab = "#addBttn"+idd;
+        $(makeId).find(".fields").attr('disabled', function(_, attr){ return !attr});
+        $(makeId).find(ab).attr('disabled', function(_, attr){ return !attr});
+        $(makeId).find(".fields").toggleClass('fieldsBack');
+    });
+
+</script>
+
+<script>
+    $('.addBttn').click(function(e){
+    var id = $(this).parent().parent().parent().attr("id");
+    var makeId = "#"+id;
+    var idd = makeId.charAt( makeId.length - 1 );
+    var tb = "#totalBeds"+idd;
+    var vc = "#vacantBeds"+idd;
+        var total = $(tb).val();
+        var vacant = $(vc).val();
+
+        if (vacant > total){
+            e.preventDefault();
+            alert('Vacant Beds Cannot Be more than Total Beds');
+        }
+
+    });
+</script>
+{% endblock %}
+
+{% block body %}
+{% load static %}
+
+
+{% if rooms_count > 0 %}
+
+
+{% for room in rooms %}
+
+<div class="row my-5 mx-auto" data-aos="fade-right">
+    <div class="col-lg-12">
+        <form class="form form-group md-form" id='form{{ forloop.counter }}' action="viewrooms/update?id={{ room.room_id }}" method="post">
+            {% csrf_token %}
+            <div class="blog-post">
+                {% load static %}
+                <div class="blog-post_img">
+                    <div id="wrapper" class="">
+                        <div class="carousel" id="carous">
+
+                            {% for image in room_images %}
+                            {% if image.room_id.getRoomId == room.room_id %}
+                            <div class="img img-fluid" style="display: inline-block;">
+                                <img src='/media/{{ image.image_path }}' onerror="this.src='/media/payingGuest/images/defaults/default.jpg'"   border="0" />
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blog-post_info container">
+                    <h5 class="blog-post_title">Room Details <p class="mybtn"><span data-toggle="tooltip" data-placement="bottom" title="Edit Room Details" class="fa fa fa-pencil-square-o" style="font-size: 20px;cursor: pointer;"></span></p>
+                        {% if not room.is_active %}
+                        <a href="{% url 'managepayment' rid=room.room_id %}">
+                            <i class="fa fa fa-info-circle float-right red-tooltip" style="color: red;"  data-toggle="tooltip" data-placement="bottom" title="Click to complete Payment"></i>
+                        </a>
+                        {% endif %}
+                    </h5>
+                    <div class="blog-post_date">
+                        <span class="pb-2">Posted Date: {{ room.date_posted }}</span>
+                        <span class="pb-2">Room ID: {{ room.room_id }}</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 col-lg-6 pr-0">
+                            <p class="blog-post_text" style="">Total beds: <input type="number" class="spclfields" id="totalBeds{{ forloop.counter }}" value="{{ room.no_of_beds }}" disabled> </p>
+                            <p class="blog-post_text">Vacant beds: <input disabled type="number" class="fields" min="0" id="vacantBeds{{ forloop.counter }}" name="vacantBeds" value="{{ room.vacant_beds }}"> </p>
+                            <p class="blog-post_text">Rent per beds: <input disabled  type="number" class="fields" min="0" id="rentPerBed{{ forloop.counter }}"  name="rentPerBed" value="{{ room.rent_per_bed }}">   </p>
+                            <p class="blog-post_text">Deposit: <input disabled  type="number" class="fields" id="deposit{{ forloop.counter }}" min="0" name="deposit" value="{{ room.deposit }}"> </p>
+                        </div>
+                        <div class="col-md-7 col-lg-6 pr-0">
+                            <p class="blog-post_text">Address: {{ room.address }}</p>
+                            <p class="blog-post_text">Expiry Date: {{ room.exp_date }}</p>
+                            <p class="blog-post_text">Gender Allowed: <select disabled class="fields" name="gender">
+                                <option value="Male" {% if room.gender == 'Male' %} selected {% endif %}>Male</option>
+                                <option value="Female"{% if room.gender == 'Female' %} selected {% endif %}>Female</option>
+                                <option value="Both"{% if room.gender == 'Both' %} selected {% endif %}>Both</option>
+                            </select></p>
+                        </div>
+                    </div>
+                    <input type="submit" name="submit" value="UPDATE" id="addBttn{{ forloop.counter }}" disabled class="addBttn customBtn btn btn-inline-block btn-lg font-weight-bold">
+                    <a href="{% url 'managepayment' rid=room.room_id %}" class="customBtn btn btn-inline-block btn-lg font-weight-bold">UPGRADE</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endfor %}
+
+
+{% else %}
+<div class="row h-75 mx-auto d-flex align-items-center">
+    <div class="col-sm-12">
+        <h1 class="text-center">You have no Rooms Added Yet!!</h1>
+        <a id="addBtn" class="text-decoration-none btn btn-block font-weight-bold" href="./addrooms">ADD ROOM</a>
+
+    </div>
+
+</div>
+{% endif %}
+
+
+
+
+{% endblock %}

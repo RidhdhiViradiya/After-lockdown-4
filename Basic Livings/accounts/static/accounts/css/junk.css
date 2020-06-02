@@ -1,0 +1,78 @@
+
+
+/*Vendor Registration*/
+.iconfile{
+    margin-top:-24px;
+    padding-left:13px;
+    position: absolute;
+    color : green;
+}
+.form-inline .country{
+    width:162px;
+}
+input[type=text]{
+    position:relative;
+}
+input[type="radio"] {
+  /* remove standard background appearance */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* create custom radiobutton appearance */
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  padding: 2px;
+  /* background-color only for content */
+  background-clip: content-box;
+  border: 2px solid #bbbbbb;
+ background-color: #e7e6e7;
+ border-radius: 50%;
+}
+
+/* appearance for checked radiobutton */
+input[type="radio"]:checked {
+   background-color: #93e026;
+}
+
+.inwith input{
+    padding-left : 40px;
+}
+.inwith select{
+    padding-left : 40px;
+}
+a{
+     text-decoration : none;
+     color:green;
+}
+a:focus{
+    color:blue;
+}
+.sub{
+    width:30%;
+    background:#3aa135;
+    color: white;
+}
+.link{
+    text-align:center;
+}
+.leftside{
+    padding-top:10%;
+}
+@keyframes transitionIn{
+    from {
+        opacity : 0;
+        transform: rotateX(-10deg);
+    }
+    to{
+        opacity: 1;
+        transform: rotateX(0);
+    }
+}
+.mt-4 {
+    animation: transitionIn 0.90s;
+}
+.left{
+    height:100%;
+    width:100%;
+}
